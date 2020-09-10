@@ -82,7 +82,7 @@ void listarChoferes() {
 	FILE* p;
 	choferes regChof;
 
-	p = fopen("materias.dat", "rb");
+	p = fopen("choferes.dat", "rb");
 	if (p == NULL)
 	{
 		cout << "Error al abrir el archivo/ o no existe" << endl;
@@ -93,7 +93,7 @@ void listarChoferes() {
 	while (fread(&regChof, sizeof(choferes), 1, p)) {
 		if (regChof.estado == true) {
 			mostrarChofer(regChof);
-			cout << ">>>>>><<<<<<" << endl;
+			cout << "-----------FIN USUARIO-----------" << endl;
 		}
 	}
 	system("pause");
