@@ -15,7 +15,7 @@ using namespace rlutil;
 
 void menuChoferes() {
 	int opcion;
-	cout << "MENÚ CHOFERES" << endl;
+	cout << "MENÃš CHOFERES" << endl;
 	cout << "------------------" << endl;
 	cout << "1) NUEVO CHOFER" << endl;
 	cout << "2) MODIFICAR CHOFER" << endl;
@@ -23,7 +23,7 @@ void menuChoferes() {
 	cout << "4) LISTAR TODOS LOS CHOFERES" << endl;
 	cout << "5) ELIMINAR CHOFER" << endl;
 	cout << "--------------------------------" << endl;
-	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
+	cout << "0) VOLVER AL MENÃš PRINCIPAL" << endl;
 	
 	cin >> opcion;
 	cls();
@@ -34,7 +34,6 @@ void menuChoferes() {
 			cout << "Se ha agregado correctamente." << endl;
 		}
 		else cout << "Error al crear/agregar registro." << endl;
-		system("pause");
 		break;
 	case 2:
 		modificarChofer();
