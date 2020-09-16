@@ -36,10 +36,10 @@ bool agregarChofer() {
 	cout << "Ingresar Apellido: " << endl;
 	cin >> regChof.apellido;
 	
-	cout << "Ingresar fecha de ingreso(dia/mes/año):" << endl;
+	cout << "Ingresar fecha de ingreso(dia/mes/aÃ±o):" << endl;
 	cin >> regChof.fechaingreso.dia;
 	cin >> regChof.fechaingreso.mes;
-	cin >> regChof.fechaingreso.año;
+	cin >> regChof.fechaingreso.aÃ±o;
 	
 	cout << "Ingresar CUIT: " << endl;
 	cin >> regChof.CUIT;
@@ -48,10 +48,10 @@ bool agregarChofer() {
 		cin >> regChof.registro;
 	} while (regChof.registro < 1 || regChof.registro>3);
 	
-	cout << "Ingresar fecha de vencimiento (dia,mes,año): " << endl;
+	cout << "Ingresar fecha de vencimiento (dia,mes,aÃ±o): " << endl;
 	cin >> regChof.vencimiento.dia;
 	cin >> regChof.vencimiento.mes;
-	cin >> regChof.vencimiento.año;
+	cin >> regChof.vencimiento.aÃ±o;
 	
 	cout << "Ingresar numero de telefono: " << endl;
 	cin >> regChof.telefono;
@@ -140,8 +140,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "Año: ";
-		cin >> reg.vencimiento.año;
+		cout << "AÃ±o: ";
+		cin >> reg.vencimiento.aÃ±o;
 		// Se modifica
 		if (modifyfile(reg, pos) == true)
 		{
@@ -164,8 +164,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "Año: ";
-		cin >> reg.vencimiento.año;
+		cout << "AÃ±o: ";
+		cin >> reg.vencimiento.aÃ±o;
 		// Se modifica
 		if (modifyfile(reg, pos) == true)
 		{
@@ -224,13 +224,13 @@ void mostrarChofer(choferes regChof) {
 	cout << endl;
 	cout << "APELLIDO: " << regChof.apellido << endl;
 	cout << endl;
-	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.año << endl;
+	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.aÃ±o << endl;
 	cout << endl;
 	cout << "CUIT: " << regChof.CUIT << endl;
 	cout << endl;
 	cout << "N DE REGISTRO: " << regChof.registro << endl;
 	cout << endl;
-	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.año << endl;
+	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.aÃ±o << endl;
 	cout << endl;
 	cout << "TELEFONO: " << regChof.telefono << endl;
 	cout << endl;
@@ -269,7 +269,7 @@ void eliminarChofer() {
 	mostrarChofer(reg);
 	cout << endl;
 	//Estas seguro de que queres darlo de baja? 
-	cout << "Deseas modificarlo? (S/n)  ";
+	cout << "Deseas darlo de baja? (S/n)  ";
 	cin >> opc;
 	switch (opc)
 	{
