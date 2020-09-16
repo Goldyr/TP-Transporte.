@@ -1,18 +1,24 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
-#include <clocale> 
+#include <clocale>
+#include <cstring>
+#include "rlutil.h"
 
 using namespace std;
-#include "rlutil.h"
+using namespace rlutil;
+
 #include "structs.h"
 #include "menus.h"
+#include "operaciones_registros.h"
 #include "choferes.h"
+
 
 int main() {
 	int opcion;
 	setlocale(LC_CTYPE, "Spanish");
 	while (true) {
+		cls();
 		cout << "MENÚ PRINCIPAL" << endl;
 		cout << "--------------" << endl;
 		cout << "1) CHOFERES" << endl;
@@ -22,10 +28,9 @@ int main() {
 		cout << "----------------------" << endl;
 		cout << "0) SALIR DEL PROGRAMA" << endl;
 		cin >> opcion;
-
+		cls();
 		switch (opcion) {
 			case 1:
-				rlutil::cls();
 				menuChoferes();
 				break;
 			case 2:
@@ -43,7 +48,7 @@ int main() {
 				system("pause");
 				break;
 		}
-		rlutil::cls();
+		system("pause");
 	}
 	
 

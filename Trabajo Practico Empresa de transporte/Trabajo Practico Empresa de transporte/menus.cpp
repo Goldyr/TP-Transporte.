@@ -1,12 +1,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
-#include <clocale> 
+#include <clocale>
+#include <cstring>
+#include "rlutil.h"
 
 using namespace std;
-#include "rlutil.h"
+using namespace rlutil;
+
 #include "structs.h"
 #include "menus.h"
+#include "operaciones_registros.h"
 #include "choferes.h"
 
 void menuChoferes() {
@@ -22,7 +26,7 @@ void menuChoferes() {
 	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
 	
 	cin >> opcion;
-	rlutil::cls();
+	cls();
 
 	switch (opcion) {
 	case 1:
@@ -36,12 +40,13 @@ void menuChoferes() {
 		modificarChofer();
 		break;
 	case 3:
-		
+		mostrarChoferDNI();
 		break;
 	case 4:
 		listarChoferes();
 		break;
 	case 5:
+		eliminarChofer();
 		break;
 	case 0:
 		break;
