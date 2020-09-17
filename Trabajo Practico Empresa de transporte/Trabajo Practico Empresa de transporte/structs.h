@@ -1,6 +1,3 @@
-
-
-
 struct fecha {
 	int dia;
 	int mes;
@@ -20,4 +17,19 @@ struct choferes {
 	bool propietario;
 	bool estado;
 
+};
+
+enum BUSCAR_REGISTRO
+{
+	DNI,
+	CUIT,
+	NOMBRE,
+	APELLIDO,
+	TELEFONO
+};
+
+enum FECHAS
+{
+	MENOR,
+	VENCIMIENTO
 };

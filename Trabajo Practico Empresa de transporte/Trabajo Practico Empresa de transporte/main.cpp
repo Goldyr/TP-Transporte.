@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <clocale>
 #include <cstring>
+#include <ctime>
 #include "rlutil.h"
 
 using namespace std;
@@ -28,13 +29,13 @@ int main() {
 		cout << "----------------------" << endl;
 		cout << "0) SALIR DEL PROGRAMA" << endl;
 		cin >> opcion;
+		cin.ignore();
 		cls();
 		switch (opcion) {
 			case 1:
 				menuChoferes();
 				break;
 			case 2:
-				
 				break;
 			case 3:
 				break;
@@ -51,8 +52,5 @@ int main() {
 		system("pause");
 	}
 	
-
-
-
 	return 0;
 }

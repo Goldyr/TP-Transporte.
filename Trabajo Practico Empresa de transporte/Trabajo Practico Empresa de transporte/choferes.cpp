@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <clocale> 
 #include <cstring>
+#include <ctime>
 #include "rlutil.h"
 
 using namespace std;
@@ -14,7 +15,6 @@ using namespace rlutil;
 #include "choferes.h"
 
 bool agregarChofer() {
-
 	FILE* p;
 	choferes regChof;
 	p = fopen("../Debug/choferes.dat", "ab");
@@ -22,37 +22,90 @@ bool agregarChofer() {
 	if (p == NULL) {
 		cout << "Error al abrir el archivo" << endl;
 		cout << "agregarChofer" << endl;
-		fclose(p);
 		return false;
 	}
+
+	// 1. Ingreso DNI
+
+	do
+	{	
+		cout << "Ingresar DNI: " << endl;
+		cargarChar(regChof.DNI, 10);
+
+	}
+	//
+	// Validacion
+	//
+	// 1. No este vacio el array tipo char
+	// 2. El DNI es unico en el archivo
+	while (isEmpty(regChof.DNI, 10) == true || searchreg(regChof.DNI, BUSCAR_REGISTRO::DNI) != -1);
 	
-	cout << "Ingresar DNI: " << endl;
-	cin >> regChof.DNI;
+
+	// 2. Ingreso Nombre
+	do
+	{
+		cout << "Ingresar Nombre: " << endl;
+		cargarChar(regChof.nombre, 50);
+	}
+	//
+	// Validacion
+	//
+	while (isEmpty(regChof.nombre, 50) == true);
+
+	// 3. Ingreso Apellido
+	do
+	{
+		cout << "Ingresar Apellido: " << endl;
+		cargarChar(regChof.apellido, 50);
+
+	}
+	//
+	// Validacion
+	//
+	while (isEmpty(regChof.apellido, 50) == true);
+
+	// 4. Ingreso de fecha de ingreso
+	do
+	{
+
+		cout << "Ingresar fecha de ingreso(dia/mes/año):" << endl;
+		cin >> regChof.fechaingreso.dia;
+		cin >> regChof.fechaingreso.mes;
+		cin >> regChof.fechaingreso.año;
+	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.año, FECHAS::MENOR) == -1);
+
+	cin.ignore();
+	// 5. Ingreso de CUIT
+
+	do
+	{
+		cout << "Ingresar CUIT: " << endl;
+		cargarChar(regChof.CUIT, 20);
+	}
+	//
+	// Validacion
+	// 
+	while (isEmpty(regChof.CUIT, 20) == true || searchreg(regChof.CUIT, BUSCAR_REGISTRO::CUIT) != -1);
 
 
-	cout << "Ingresar Nombre: " << endl;
-	cin >> regChof.nombre;
-
-	cout << "Ingresar Apellido: " << endl;
-	cin >> regChof.apellido;
-	
-	cout << "Ingresar fecha de ingreso(dia/mes/aÃ±o):" << endl;
-	cin >> regChof.fechaingreso.dia;
-	cin >> regChof.fechaingreso.mes;
-	cin >> regChof.fechaingreso.aÃ±o;
-	
-	cout << "Ingresar CUIT: " << endl;
-	cin >> regChof.CUIT;
 	do {
 		cout << "Ingresar registro (1,2 o 3): " << endl;
 		cin >> regChof.registro;
 	} while (regChof.registro < 1 || regChof.registro>3);
 	
-	cout << "Ingresar fecha de vencimiento (dia,mes,aÃ±o): " << endl;
-	cin >> regChof.vencimiento.dia;
-	cin >> regChof.vencimiento.mes;
-	cin >> regChof.vencimiento.aÃ±o;
+
+	do
+	{
+
+		cout << "Ingresar fecha de vencimiento(dia/mes/año):" << endl;
+		cin >> regChof.vencimiento.dia;
+		cin >> regChof.vencimiento.mes;
+		cin >> regChof.vencimiento.año;
+	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.año, FECHAS::VENCIMIENTO) == -1);
+
 	
+
+
 	cout << "Ingresar numero de telefono: " << endl;
 	cin >> regChof.telefono;
 
@@ -75,7 +128,8 @@ void mostrarChoferDNI()
 	cout << "Ingresar el numero de DNI del chofer para mostrar: ";
 	cin >> ingreso_DNI;
 	// Busco la posicion del DNI
-	pos = searchreg(ingreso_DNI);
+	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
+	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	// Si no existe
 	if (pos == -1)
 	{
@@ -104,7 +158,7 @@ void modificarChofer() {
 	cin >> ingreso_DNI;
 
 	// Se busca la posicion del registro con el DNI
-	pos = searchreg(ingreso_DNI);
+	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	cout << endl << endl;
 	// Si no existe
 	if (pos == -1)
@@ -140,8 +194,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "AÃ±o: ";
-		cin >> reg.vencimiento.aÃ±o;
+		cout << "año: ";
+		cin >> reg.vencimiento.año;
 		// Se modifica
 		if (modifyfile(reg, pos) == true)
 		{
@@ -164,8 +218,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "AÃ±o: ";
-		cin >> reg.vencimiento.aÃ±o;
+		cout << "año: ";
+		cin >> reg.vencimiento.año;
 		// Se modifica
 		if (modifyfile(reg, pos) == true)
 		{
@@ -224,19 +278,36 @@ void mostrarChofer(choferes regChof) {
 	cout << endl;
 	cout << "APELLIDO: " << regChof.apellido << endl;
 	cout << endl;
-	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.aÃ±o << endl;
+	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.año << endl;
 	cout << endl;
 	cout << "CUIT: " << regChof.CUIT << endl;
 	cout << endl;
 	cout << "N DE REGISTRO: " << regChof.registro << endl;
 	cout << endl;
-	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.aÃ±o << endl;
+	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.año << endl;
 	cout << endl;
 	cout << "TELEFONO: " << regChof.telefono << endl;
 	cout << endl;
 
 
 	return;
+}
+
+bool isEmpty(char* p, int tam)
+{
+	// C cuenta cuantos vacíos hay
+	int c = 0;
+	for (int i = 0; i < tam; i++)
+	{
+			// Si en la primera o segunda posicion hay un 0, esta vacia
+			if (p[0] == NULL || p[1] == NULL) return true;
+			// Tambien cuenta los espacios
+			if (p[i] == 32) c++;
+		
+	}
+	// Si se contaron 2 o mas, se cuenta como una cadena vacia
+	if (c >= 2)return true;
+	return false;
 }
 
 void eliminarChofer() {
@@ -247,7 +318,7 @@ void eliminarChofer() {
 	cout << "Ingrese el DNI del chofer que desea dar de baja" << endl;
 	cin >> ingreso_DNI;
 	//BUSCO POS
-	pos=searchreg(ingreso_DNI);
+	pos=searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	cout << endl << endl;
 	// En caso de que no exista
 	if (pos == -1)
@@ -318,4 +389,179 @@ void eliminarChofer() {
 	}
 
 
+}
+
+void cargarChar(char* p, int tam)
+{
+	int i;
+	fflush(stdin);
+	for (i = 0; i < 10; i++)
+	{
+		p[i] = cin.get();
+		if (p[i] == '\n') break;
+	}
+	p[i] = '\0';
+	fflush(stdin);
+}
+
+int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
+{
+	// Declaracion de variables de ctime
+	int mes, dia, año;
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	año = 1900 + ltm->tm_year;
+	mes = 1 + ltm->tm_mon;
+	dia = ltm->tm_mday;
+	// Swtich de enum de opcion
+	switch (opcion)
+	{
+	// La fecha a comparar tiene que ser menor a la del sistema
+	case MENOR:
+		// Pregunto si el año para comparar es mayor
+		if (c_año > año)
+		{
+			return -1;
+		}
+		// Si es el mismo año pregunto si el mes es mayor
+		if (c_año == año)
+		{
+			if (c_mes > mes) return -1;
+		}
+		// Si es el mismo año y mes pregunto si el dia es mayor
+		if (c_mes == mes)
+		{
+			if (c_dia > dia) return -1;
+		}
+		// Verificacion de dias con respecto a los meses
+		switch (c_mes)
+		{
+		case 1:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 2:
+			if (c_dia >= 1 && c_dia <= 29)return 0;
+			else return -1;
+				break;
+		case 3:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 4:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+				break;
+		case 5:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 6:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+				break;
+		case 7:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 8:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 9:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+				break;
+		case 10:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		case 11:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+				break;
+		case 12:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+				break;
+		default: return -1;
+			break;
+		}
+		break;
+	// La fecha a comparar tiene que ser mayor a la del sistema
+	case VENCIMIENTO:
+		// Pregunto si el año a comparar es menor
+		if (c_año < año)
+		{
+			return -1;
+		}
+		// El mes es menor?
+		if (c_año == año)
+		{
+			if (c_mes < mes) return -1;
+		}
+		// Mismo año, mismo mes el dia es menor? 
+		if (c_mes == mes)
+		{
+			if (c_dia < dia) return -1;
+		}
+		// Verificacion de dias con respecto a los meses
+		switch (c_mes)
+		{
+		case 1:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 2:
+			if (c_dia >= 1 && c_dia <= 29)return 0;
+			else return -1;
+			break;
+		case 3:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 4:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+			break;
+		case 5:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 6:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+			break;
+		case 7:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 8:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 9:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+			break;
+		case 10:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		case 11:
+			if (c_dia >= 1 && c_dia <= 30)return 0;
+			else return -1;
+			break;
+		case 12:
+			if (c_dia >= 1 && c_dia <= 31)return 0;
+			else return -1;
+			break;
+		default: return -1;
+			break;
+		}
+		break;
+	default:
+		return -1;
+		break;
+	}
 }

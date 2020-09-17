@@ -17,3 +17,12 @@ void mostrarChoferDNI();
 
 //Elimina un chofer por DNI
 void eliminarChofer();
+
+//Verificar si una cadena está vacia
+bool isEmpty(char* p, int tam);
+
+//Se carga una cadena de caracteres
+void cargarChar(char* p, int tam);
+
+//Se compara la fecha con respecto al sistema
+int fechacmp(int dia, int mes, int año, FECHAS opcion);

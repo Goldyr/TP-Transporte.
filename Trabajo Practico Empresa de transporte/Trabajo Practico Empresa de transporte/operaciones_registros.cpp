@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <clocale> 
 #include <cstring>
+#include <ctime>
 #include "rlutil.h"
 
 using namespace std;
@@ -29,10 +30,11 @@ bool read(choferes *reg, int pos)
 	return read;
 }
 
-int searchreg(char *dni)
+int searchreg(char *c, BUSCAR_REGISTRO buscar)
 {
-	int pos = 0;
+
 	choferes reg;
+	int pos = 0;
 	FILE* pf;
 	pf = fopen("../Debug/choferes.dat", "rb");
 	if (pf == NULL)
@@ -40,15 +42,66 @@ int searchreg(char *dni)
 		cout << "Buscar posicion" << endl;
 		return -1;
 	}
-	while (fread(&reg, sizeof(choferes), 1, pf) == 1)
+	switch (buscar)
 	{
-		if (strcmp(reg.DNI, dni) == 0 && reg.estado == true)
+	case DNI:
+		while (fread(&reg, sizeof(choferes), 1, pf) == 1)
 		{
-			fclose(pf);
-			return pos;
+			if (strcmp(reg.DNI, c) == 0 && reg.estado == true)
+			{
+				fclose(pf);
+				return pos;
+			}
+			pos++;
 		}
-		pos++;
+		break;
+	case CUIT:
+		while (fread(&reg, sizeof(choferes), 1, pf) == 1)
+		{
+			if (strcmp(reg.CUIT, c) == 0 && reg.estado == true)
+			{
+				fclose(pf);
+				return pos;
+			}
+			pos++;
+		}
+		break;
+	case NOMBRE:
+		while (fread(&reg, sizeof(choferes), 1, pf) == 1)
+		{
+			if (strcmp(reg.nombre, c) == 0 && reg.estado == true)
+			{
+				fclose(pf);
+				return pos;
+			}
+			pos++;
+		}
+		break;
+	case APELLIDO:
+		while (fread(&reg, sizeof(choferes), 1, pf) == 1)
+		{
+			if (strcmp(reg.apellido, c) == 0 && reg.estado == true)
+			{
+				fclose(pf);
+				return pos;
+			}
+			pos++;
+		}
+		break;
+	case TELEFONO:
+		while (fread(&reg, sizeof(choferes), 1, pf) == 1)
+		{
+			if (strcmp(reg.telefono, c) == 0 && reg.estado == true)
+			{
+				fclose(pf);
+				return pos;
+			}
+			pos++;
+		}
+		break;
+	default: break;
 	}
+
 	fclose(pf);
 	return -1;
 }

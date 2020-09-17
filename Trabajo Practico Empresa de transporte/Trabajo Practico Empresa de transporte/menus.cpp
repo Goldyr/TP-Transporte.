@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <clocale>
 #include <cstring>
+#include <ctime>
 #include "rlutil.h"
 
 using namespace std;
@@ -26,6 +27,7 @@ void menuChoferes() {
 	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
 	
 	cin >> opcion;
+	cin.ignore();
 	cls();
 
 	switch (opcion) {
