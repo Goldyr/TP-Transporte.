@@ -19,6 +19,20 @@ struct choferes {
 
 };
 
+struct viajes {
+	int IDViaje;
+	char DNI_Chofer[10];
+	int IDCliente;
+	fecha fechaviaje;
+	int horasalida;
+	float kilometraje;
+	float importe;
+	char patente[10];
+	int calificacion;
+	bool estado;
+
+};
+
 enum BUSCAR_REGISTRO
 {
 	DNI,

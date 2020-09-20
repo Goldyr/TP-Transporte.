@@ -9,24 +9,21 @@
 using namespace std;
 using namespace rlutil;
 
+
+const char* ARCHIVO_CHOFERES = "../Debug/choferes.dat";
+
 #include "structs.h"
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
+#include "viajes.h"
+
+
 
 bool agregarChofer() {
-	FILE* p;
 	choferes regChof;
-	p = fopen("../Debug/choferes.dat", "ab");
 	
-	if (p == NULL) {
-		cout << "Error al abrir el archivo" << endl;
-		cout << "agregarChofer" << endl;
-		return false;
-	}
-
 	// 1. Ingreso DNI
-
 	do
 	{	
 		cout << "Ingresar DNI: " << endl;
@@ -111,11 +108,9 @@ bool agregarChofer() {
 
 	regChof.propietario = true;
 	regChof.estado = true;
-
-	fwrite(&regChof, sizeof(regChof), 1, p);
-
-	fclose(p);
-
+	
+	guardarRegistro(regChof,ARCHIVO_CHOFERES);
+	
 	return true;
 }
 

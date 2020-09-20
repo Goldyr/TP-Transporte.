@@ -9,10 +9,13 @@
 using namespace std;
 using namespace rlutil;
 
+
+
 #include "structs.h"
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
+#include "viajes.h"
 
 bool read(choferes *reg, int pos)
 {
@@ -120,4 +123,34 @@ bool modifyfile(choferes reg, int pos)
 	saved = fwrite(&reg, sizeof(choferes), 1, pf);
 	fclose(pf);
 	return saved;
+}
+
+bool guardarRegistro(choferes regChof, const char* direccion) {
+	FILE* p;
+	p = fopen(direccion, "ab");
+	if (p == NULL) {
+		cout << "Error al abrir el archivo" << endl;
+		cout << "guardarRegistro" << endl;
+		return false;
+	}
+	fwrite(&regChof, sizeof(regChof), 1, p);
+
+	fclose(p);
+
+	return true;
+}
+
+bool guardarRegistro(viajes regViaj, const char* direccion) {
+	FILE* p;
+	p = fopen(direccion, "ab");
+	if (p == NULL) {
+		cout << "Error al abrir el archivo" << endl;
+		cout << "guardarRegistro" << endl;
+		fclose(p);
+		return false;
+	}
+	fwrite(&regViaj, sizeof(regViaj), 1, p);
+	fclose(p);
+
+	return true;
 }

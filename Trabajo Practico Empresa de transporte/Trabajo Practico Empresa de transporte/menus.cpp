@@ -13,6 +13,9 @@ using namespace rlutil;
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
+#include "viajes.h"
+
+
 
 void menuChoferes() {
 	int opcion;
@@ -55,5 +58,54 @@ void menuChoferes() {
 		cout << "Opcion incorrecta. " << endl;
 		break;
 	}
+	return;
+}
+
+void menuViajes() {
+	
+	int opcion;
+	cout << "MENÚ VIAJES" << endl;
+	cout << "------------------" << endl;
+	cout << "1) NUEVO VIAJE" << endl;
+	cout << "2) LISTAR VIAJE POR IDVIAJE" << endl;
+	cout << "3) LISTAR TODOS LOS VIAJES" << endl;
+	cout << "4) ELIMINAR VIAJE" << endl;;
+	cout << "--------------------------------" << endl;
+	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
+
+	cin >> opcion;
+	cin.ignore();
+	cls();
+
+	switch (opcion) {
+	case 1:
+		if (agregarViaje()) {
+		cout << "Se ha agregado correctamente." << endl;
+		}
+		else cout << "Error al crear/agregar registro." << endl;
+		break;
+	case 2:
+		
+		break;
+	case 3:
+		listarViajes();
+		break;
+	case 4:
+		
+		break;
+	case 5:
+		
+		break;
+	case 0:
+		break;
+	default:
+		cout << "Opcion incorrecta. " << endl;
+		break;
+	}
+
+
+
+
+
 	return;
 }

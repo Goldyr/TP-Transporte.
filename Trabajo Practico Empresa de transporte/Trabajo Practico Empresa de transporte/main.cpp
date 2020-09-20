@@ -9,10 +9,15 @@
 using namespace std;
 using namespace rlutil;
 
+
+
 #include "structs.h"
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
+#include "viajes.h"
+
+
 
 
 int main() {
@@ -36,6 +41,7 @@ int main() {
 				menuChoferes();
 				break;
 			case 2:
+				menuViajes();
 				break;
 			case 3:
 				break;
