@@ -9,3 +9,9 @@ void listarViajes();
 
 //Muestra un viaje
 void mostrarViaje(viajes regViaj);
+
+//Muestra un viaje por ID
+void mostrarViaje_ID();
+
+//Se elimina un viaje ingresado
+void eliminarViaje();

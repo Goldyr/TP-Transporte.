@@ -20,45 +20,72 @@ const char* ARCHIVO_VIAJES = "../Debug/viajes.dat";
 
 
 
-bool agregarViaje(){
+bool agregarViaje() {
 
 	viajes regViaj;
 
 	//Ingresar datos
-	//TODO: FALTA VALIDAR TODO
+	//TODO: FALTA HACER QUE EL ID VIAJE SEA AUTONUMERICO
 	cout << "Ingresar ID del viaje " << endl;
 	cin >> regViaj.IDViaje;
 
-	cout << "Ingresar el DNI del chofer" << endl;
-	cin >> regViaj.DNI_Chofer;
+	do
+	{
+		cout << "Ingresar el DNI del chofer" << endl;
+		cin >> regViaj.DNI_Chofer;
+	}
+	// Verificacion
+	while (searchreg_ch(regViaj.DNI_Chofer, DNI) == -1);
 
 	cout << "Ingresar el ID del cliente" << endl;
 	cin >> regViaj.IDCliente;
 
-	cout << "Ingresar fecha del viaje (dia/mes/año)" << endl;
-	cin >> regViaj.fechaviaje.dia;
-	cin >> regViaj.fechaviaje.dia;
-	cin >> regViaj.fechaviaje.año;
+	do
+	{
+		cout << "Ingresar fecha del viaje (dia/mes/año)" << endl;
+		cin >> regViaj.fechaviaje.dia;
+		cin >> regViaj.fechaviaje.mes;
+		cin >> regViaj.fechaviaje.año;
+	}
+	// Verificacion
+	while (fechacmp(regViaj.fechaviaje.dia, regViaj.fechaviaje.mes, regViaj.fechaviaje.año, MENOR) == -1);
 
-	cout << "Ingresar hora de salida " << endl;
-	cin >> regViaj.horasalida;
+	do
+	{
+		cout << "Ingresar hora de salida " << endl;
+		cin >> regViaj.horasalida;
+	} while (regViaj.horasalida < 0 || regViaj.horasalida >23);
 
-	cout << "Ingresar Kilometraje " << endl;
-	cin >> regViaj.kilometraje;
+	do
+	{
+		cout << "Ingresar Kilometraje " << endl;
+		cin >> regViaj.kilometraje;
+	} while (regViaj.kilometraje <= 0);
 
-	cout << "Ingresar Importe " << endl;
-	cin >> regViaj.importe;
+	do
+	{
+		cout << "Ingresar Importe " << endl;
+		cin >> regViaj.importe;
+	} while (regViaj.importe <= 0);
 
-	cout << "Ingresar patente" << endl;
-	cin >> regViaj.patente;
+	cin.ignore();
 
-	cout << "Ingresar calificacion" << endl;
-	cin >> regViaj.calificacion;
+	do
+	{
+		cout << "Ingresar patente" << endl;
+		cargarChar(regViaj.patente, 10);
+	} while (isEmpty(regViaj.patente, 10) == true);
+
+	do
+	{
+		cout << "Ingresar calificacion" << endl;
+		cin >> regViaj.calificacion;
+	} while (regViaj.calificacion < 0 || regViaj.calificacion>5);
 
 	regViaj.estado = true;
 
 	//Guarda registro
-	guardarRegistro(regViaj, ARCHIVO_VIAJES);
+	guardar_viajes(regViaj, ARCHIVO_VIAJES);
 		
 
 	return true;
@@ -77,18 +104,11 @@ void listarViajes() {
 	while (fread(&regViaj, sizeof(viajes), 1, p)) {
 		if (regViaj.estado == true) {
 			mostrarViaje(regViaj);
-			cout << "-----------FIN USUARIO-----------" << endl;
+			cout << "-----------FIN VIAJE----------" << endl;
 		}
 	}
-	system("pause");
 	fclose(p);
-
-
 	return;
-
-
-
-
 
 }
 void mostrarViaje(viajes regViaj) {
@@ -122,4 +142,92 @@ void mostrarViaje(viajes regViaj) {
 	cout << regViaj.calificacion<< endl;
 
 
+}
+
+void eliminarViaje()
+{
+	// Basicamente copy paste del eliminarChoferes
+	viajes regViaje;
+	int id, pos;
+	char opc;
+	cout << "Ingresa el ID del viaje para dar de baja" << endl;
+	cin >> id;
+	pos = searchreg_viajes(id);
+	if (pos == -1)
+	{
+		cout << "El ID ingresado no existe, ingrese otro" << endl;
+		return;
+	}
+	if (leer_viajes(&regViaje, pos) == false)
+	{
+		cout << "Error al leer el archivo de viajes" << endl;
+		return;
+	}
+	cout << endl;
+
+	cout << "Se encontro el siguiente registro: " << endl;
+
+	mostrarViaje(regViaje);
+
+	cout << endl;
+
+	cout << "Desea darlo de baja? (S/n) " << endl;
+
+	cin >> opc;
+	
+	switch (opc)
+	{
+	case 's':
+		cls();
+		regViaje.estado = false;
+
+		if (modificar_viaje(regViaje, pos) == false)
+		{
+			cout << "Error al modificar el registro" << endl;
+			return;
+		}
+		cout << "El registro se dio de baja correctamente" << endl;
+		break;
+	case 'S':
+		cls();
+		regViaje.estado = false;
+
+		if (modificar_viaje(regViaje, pos) == false)
+		{
+			cout << "Error al modificar el registro" << endl;
+			return;
+		}
+		cout << "El registro se dio de baja correctamente" << endl;
+		break;
+	case 'n':
+		return;
+		break;
+	case 'N':
+		return;
+		break;
+	default:
+		cout << "Opcion incorrecta" << endl;
+		return;
+	}
+
+
+}
+
+void mostrarViaje_ID()
+{
+	int id, pos;
+	viajes viajeReg;
+	cout << "Ingrese el ID del viaje" << endl;
+	cin >> id;
+	pos = searchreg_viajes(id);
+	if (pos == -1)
+	{
+		cout << "No se encontro el ID, ingrese otro" << endl;
+	}
+	if (leer_viajes(&viajeReg, pos) == false)
+	{
+		cout << "Error al leer el registro de viajes" << endl;
+	}
+	cls();
+	mostrarViaje(viajeReg);
 }

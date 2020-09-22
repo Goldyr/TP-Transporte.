@@ -10,17 +10,16 @@ using namespace std;
 using namespace rlutil;
 
 
-
 #include "structs.h"
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
 
-bool read(choferes *reg, int pos)
+bool leer_choferes(choferes *reg, int pos)
 {
 	FILE* pf;
-	bool read;
+	bool leer_choferes;
 	pf = fopen("../Debug/choferes.dat", "rb");
 	if (pf == NULL)
 	{
@@ -28,12 +27,51 @@ bool read(choferes *reg, int pos)
 		return false;
 	}
 	fseek(pf, sizeof(choferes) * pos, 0);
-	read = fread(reg, sizeof(choferes), 1, pf);
+	leer_choferes = fread(reg, sizeof(choferes), 1, pf);
 	fclose(pf);
-	return read;
+	return leer_choferes;
 }
 
-int searchreg(char *c, BUSCAR_REGISTRO buscar)
+int searchreg_viajes(int c)
+{
+	viajes reg;
+	int pos = 0;
+	FILE* pf;
+	pf = fopen("../Debug/viajes.dat", "rb");
+	if (pf == NULL)
+	{
+		cout << "Buscar posicion viajes" << endl;
+		return -1;
+	}
+	while (fread(&reg, sizeof(viajes), 1, pf) == 1)
+	{
+		if (c == reg.IDViaje && reg.estado == true)
+		{
+			fclose(pf);
+			return pos;
+		}
+		pos++;
+	}
+	fclose(pf);
+	return -1;
+}
+
+bool leer_viajes(viajes* reg, int pos)
+{
+	bool leer_viaje;
+	FILE* pf;
+	pf = fopen("../Debug/viajes.dat", "rb");
+	if (pf == NULL)
+	{
+		cout << "Leer viajes" << endl;
+		return false;
+	}
+	fseek(pf, sizeof(viajes)*pos, 0);
+	leer_viaje = fread(reg, sizeof(viajes), 1, pf);
+	return leer_viaje;
+}
+
+int searchreg_ch(char *c, BUSCAR_REGISTRO buscar)
 {
 
 	choferes reg;
@@ -42,7 +80,7 @@ int searchreg(char *c, BUSCAR_REGISTRO buscar)
 	pf = fopen("../Debug/choferes.dat", "rb");
 	if (pf == NULL)
 	{
-		cout << "Buscar posicion" << endl;
+		cout << "Buscar posicion choferes" << endl;
 		return -1;
 	}
 	switch (buscar)
@@ -109,7 +147,7 @@ int searchreg(char *c, BUSCAR_REGISTRO buscar)
 	return -1;
 }
 
-bool modifyfile(choferes reg, int pos)
+bool modificar_choferes(choferes reg, int pos)
 {
 	bool saved;
 	FILE* pf;
@@ -125,12 +163,28 @@ bool modifyfile(choferes reg, int pos)
 	return saved;
 }
 
-bool guardarRegistro(choferes regChof, const char* direccion) {
+bool modificar_viaje(viajes reg, int pos)
+{
+	bool saved;
+	FILE* pf;
+	pf = fopen("../Debug/viajes.dat", "rb+");
+	if (pf == NULL)
+	{
+		cout << "Modificar registro";
+		return false;
+	}
+	fseek(pf, sizeof(viajes) * pos, 0);
+	saved = fwrite(&reg, sizeof(viajes), 1, pf);
+	fclose(pf);
+	return saved;
+}
+
+bool guardar_choferes(choferes regChof, const char* direccion) {
 	FILE* p;
 	p = fopen(direccion, "ab");
 	if (p == NULL) {
 		cout << "Error al abrir el archivo" << endl;
-		cout << "guardarRegistro" << endl;
+		cout << "guardar_choferes" << endl;
 		return false;
 	}
 	fwrite(&regChof, sizeof(regChof), 1, p);
@@ -140,12 +194,12 @@ bool guardarRegistro(choferes regChof, const char* direccion) {
 	return true;
 }
 
-bool guardarRegistro(viajes regViaj, const char* direccion) {
+bool guardar_viajes(viajes regViaj, const char* direccion) {
 	FILE* p;
 	p = fopen(direccion, "ab");
 	if (p == NULL) {
 		cout << "Error al abrir el archivo" << endl;
-		cout << "guardarRegistro" << endl;
+		cout << "guardar_choferes" << endl;
 		fclose(p);
 		return false;
 	}

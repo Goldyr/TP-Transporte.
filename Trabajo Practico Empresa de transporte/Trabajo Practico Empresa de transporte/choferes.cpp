@@ -35,7 +35,7 @@ bool agregarChofer() {
 	//
 	// 1. No este vacio el array tipo char
 	// 2. El DNI es unico en el archivo
-	while (isEmpty(regChof.DNI, 10) == true || searchreg(regChof.DNI, BUSCAR_REGISTRO::DNI) != -1);
+	while (isEmpty(regChof.DNI, 10) == true || searchreg_ch(regChof.DNI, BUSCAR_REGISTRO::DNI) != -1);
 	
 
 	// 2. Ingreso Nombre
@@ -82,7 +82,7 @@ bool agregarChofer() {
 	//
 	// Validacion
 	// 
-	while (isEmpty(regChof.CUIT, 20) == true || searchreg(regChof.CUIT, BUSCAR_REGISTRO::CUIT) != -1);
+	while (isEmpty(regChof.CUIT, 20) == true || searchreg_ch(regChof.CUIT, BUSCAR_REGISTRO::CUIT) != -1);
 
 
 	do {
@@ -109,7 +109,7 @@ bool agregarChofer() {
 	regChof.propietario = true;
 	regChof.estado = true;
 	
-	guardarRegistro(regChof,ARCHIVO_CHOFERES);
+	guardar_choferes(regChof,ARCHIVO_CHOFERES);
 	
 	return true;
 }
@@ -123,8 +123,7 @@ void mostrarChoferDNI()
 	cout << "Ingresar el numero de DNI del chofer para mostrar: ";
 	cin >> ingreso_DNI;
 	// Busco la posicion del DNI
-	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
-	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
+	pos = searchreg_ch(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	// Si no existe
 	if (pos == -1)
 	{
@@ -133,7 +132,7 @@ void mostrarChoferDNI()
 		return;
 	}
 	// Si existe
-	if (read(&reg, pos) == false)
+	if (leer_choferes(&reg, pos) == false)
 	{
 		cout << "No se pudo leer el registro" << endl;
 		// Salir
@@ -153,7 +152,7 @@ void modificarChofer() {
 	cin >> ingreso_DNI;
 
 	// Se busca la posicion del registro con el DNI
-	pos = searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
+	pos = searchreg_ch(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	cout << endl << endl;
 	// Si no existe
 	if (pos == -1)
@@ -163,7 +162,7 @@ void modificarChofer() {
 		return;
 	}
 	// Si existe pero no se puede leer el registro
-	if (read(&reg, pos) == false)
+	if (leer_choferes(&reg, pos) == false)
 	{
 		cout << "No se pudo leer el registro" << endl;
 		// Salir
@@ -192,7 +191,7 @@ void modificarChofer() {
 		cout << "año: ";
 		cin >> reg.vencimiento.año;
 		// Se modifica
-		if (modifyfile(reg, pos) == true)
+		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se sobreescribio correctamente
 			cout << "El registro se modifico correctamente" << endl;
@@ -216,7 +215,7 @@ void modificarChofer() {
 		cout << "año: ";
 		cin >> reg.vencimiento.año;
 		// Se modifica
-		if (modifyfile(reg, pos) == true)
+		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se sobreescribio correctamente
 			cout << "El registro se modifico correctamente" << endl;
@@ -313,7 +312,7 @@ void eliminarChofer() {
 	cout << "Ingrese el DNI del chofer que desea dar de baja" << endl;
 	cin >> ingreso_DNI;
 	//BUSCO POS
-	pos=searchreg(ingreso_DNI, BUSCAR_REGISTRO::DNI);
+	pos=searchreg_ch(ingreso_DNI, BUSCAR_REGISTRO::DNI);
 	cout << endl << endl;
 	// En caso de que no exista
 	if (pos == -1)
@@ -323,7 +322,7 @@ void eliminarChofer() {
 		return;
 	}
 	// Si existe pero no se puede leer el registro
-	if (read(&reg, pos) == false)
+	if (leer_choferes(&reg, pos) == false)
 	{
 		cout << "No se pudo leer el registro" << endl;
 		// Salir
@@ -345,7 +344,7 @@ void eliminarChofer() {
 		cls();
 		//Se da de baja
 		reg.estado = false;
-		if (modifyfile(reg, pos) == true)
+		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se dio de baja correctamente
 			cout << "El registro se dio de baja correctamente" << endl;
@@ -361,7 +360,7 @@ void eliminarChofer() {
 		cls();
 		//Se da de baja
 		reg.estado = false;
-		if (modifyfile(reg, pos) == true)
+		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se dio de baja correctamente
 			cout << "El registro se dio de baja correctamente" << endl;

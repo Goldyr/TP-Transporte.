@@ -9,17 +9,12 @@
 using namespace std;
 using namespace rlutil;
 
-
-
 #include "structs.h"
 #include "menus.h"
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
-
-
-
-
+//TODO: CREAR MENU REPORTES, CONFIGURACION. CREACION DE ARCHIVOS BKP 
 int main() {
 	int opcion;
 	setlocale(LC_CTYPE, "Spanish");

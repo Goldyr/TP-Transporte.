@@ -15,8 +15,6 @@ using namespace rlutil;
 #include "choferes.h"
 #include "viajes.h"
 
-
-
 void menuChoferes() {
 	int opcion;
 	cout << "MENÚ CHOFERES" << endl;
@@ -62,7 +60,6 @@ void menuChoferes() {
 }
 
 void menuViajes() {
-	
 	int opcion;
 	cout << "MENÚ VIAJES" << endl;
 	cout << "------------------" << endl;
@@ -82,19 +79,16 @@ void menuViajes() {
 		if (agregarViaje()) {
 		cout << "Se ha agregado correctamente." << endl;
 		}
-		else cout << "Error al crear/agregar registro." << endl;
+		else cout << "Error al crear/agregar registro." << endl; // Done
 		break;
 	case 2:
-		
+		mostrarViaje_ID(); // Done
 		break;
 	case 3:
-		listarViajes();
+		listarViajes(); // Done 
 		break;
 	case 4:
-		
-		break;
-	case 5:
-		
+		eliminarViaje(); // Done
 		break;
 	case 0:
 		break;
@@ -102,10 +96,6 @@ void menuViajes() {
 		cout << "Opcion incorrecta. " << endl;
 		break;
 	}
-
-
-
-
 
 	return;
 }

@@ -9,11 +9,11 @@ void modificarChofer();
 //Lista todos los choferes en orden de ingreso.
 void listarChoferes();
 
-//Mostrar un chofer
-void mostrarChofer(choferes regChof);
-
 // Mostrar un chofer por DNI
 void mostrarChoferDNI();
+
+//Mostrar un chofer
+void mostrarChofer(choferes regChof);
 
 //Elimina un chofer por DNI
 void eliminarChofer();
