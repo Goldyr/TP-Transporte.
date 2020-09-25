@@ -14,7 +14,7 @@ using namespace rlutil;
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
-//TODO: CREAR MENU REPORTES, CONFIGURACION. CREACION DE ARCHIVOS BKP 
+
 int main() {
 	int opcion;
 	setlocale(LC_CTYPE, "Spanish");
@@ -39,8 +39,10 @@ int main() {
 				menuViajes();
 				break;
 			case 3:
+				menuReportes();
 				break;
 			case 4:
+				menuConfig();
 				break;
 			case 0:
 				return 0;

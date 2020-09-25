@@ -200,11 +200,179 @@ bool guardar_viajes(viajes regViaj, const char* direccion) {
 	if (p == NULL) {
 		cout << "Error al abrir el archivo" << endl;
 		cout << "guardar_choferes" << endl;
-		fclose(p);
 		return false;
 	}
 	fwrite(&regViaj, sizeof(regViaj), 1, p);
 	fclose(p);
+
+	return true;
+}
+
+bool backupFiles() { 
+	//Confirmacion de usuario
+	char opcion;
+	cout << "Desea hacer una copia de seguridad S/N " << endl;
+	cin >> opcion;
+	switch (opcion) {
+	case'n':
+		return false;
+		break;
+	case'N':
+		return false;
+		break;
+	case 's':
+		break;
+	case'S':
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	choferes reg;
+	viajes reg2;
+
+	FILE* pChof;
+	FILE* pViaj;
+	FILE* pbkp;
+	FILE* pbkp2;
+
+	//Abro los 4 archivos .dat en rb .bkp en wb
+	pChof = fopen("../Debug/choferes.dat", "rb");
+	pbkp = fopen("../Debug/choferes.bkp", "wb");
+	pViaj = fopen("../Debug/viajes.dat", "rb");
+	pbkp2 = fopen("../Debug/viajes.bkp", "wb");
+
+	// Me aseguro de que se hayan abierto ambos correctamente
+	if (pChof == NULL){
+		fclose(pbkp);
+		fclose(pbkp2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.dat" << endl;
+		return false;
+	}
+	if (pbkp == NULL) {
+		fclose(pChof);
+		fclose(pbkp2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.bkp" << endl;
+		return false;
+	}
+	if (pViaj == NULL) {
+		fclose(pChof);
+		fclose(pbkp2);
+		fclose(pbkp);
+		cout << "Error abriendo viajes.dat" << endl;
+		return false;
+	}
+	if (pbkp2 == NULL) {
+		fclose(pChof);
+		fclose(pbkp);
+		fclose(pViaj);
+		cout << "Error abriendo viajes.bkp" << endl;
+		return false;
+	}
+
+	// Mientras pueda leer registros en el .dat los escribo en el .bkp
+	while (fread(&reg, sizeof(choferes), 1, pChof)){
+		fwrite(&reg, sizeof(choferes), 1, pbkp);
+	}
+
+	while (fread(&reg2, sizeof(viajes), 1, pViaj)) {
+		fwrite(&reg2, sizeof(viajes), 1, pbkp2);
+	}
+
+	//Cierro los archivos y retorno verdadero para saber que salio bien.
+	fclose(pChof);
+	fclose(pbkp);
+	fclose(pViaj);
+	fclose(pbkp2);
+
+
+
+	return true;
+}
+
+bool restaurarFiles() {
+	//Confirmacion de usuario
+	char opcion;
+	cout << "Desea restaurar los archivos backup S/N " << endl;
+
+	cin >> opcion;
+	switch (opcion) {
+	case'n':
+		return false;
+		break;
+	case'N':
+		return false;
+		break;
+	case 's':
+		break;
+	case'S':
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	choferes reg;
+	viajes reg2;
+	FILE* pChof;
+	FILE* pbkp;
+	FILE* pViaj;
+	FILE* pbkp2;
+
+	//Abro los 2 archivos .bkp en rb .dat en wb
+	pbkp = fopen("../Debug/choferes.bkp", "rb");
+	pChof = fopen("../Debug/choferes.dat", "wb");
+	pbkp2 = fopen("../Debug/viajes.bkp", "rb");
+	pViaj = fopen("../Debug/viajes.dat", "wb");
+
+	// Me aseguro de que se hayan abierto ambos correctamente
+	if (pChof == NULL) {
+		fclose(pbkp);
+		fclose(pbkp2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.dat" << endl;
+		return false;
+	}
+	if (pbkp == NULL) {
+		fclose(pChof);
+		fclose(pbkp2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.bkp" << endl;
+		return false;
+	}
+	if (pViaj == NULL) {
+		fclose(pChof);
+		fclose(pbkp2);
+		fclose(pbkp);
+		cout << "Error abriendo viajes.dat" << endl;
+		return false;
+	}
+	if (pbkp2 == NULL) {
+		fclose(pChof);
+		fclose(pbkp);
+		fclose(pViaj);
+		cout << "Error abriendo viajes.bkp" << endl;
+		return false;
+	}
+
+	// Mientras pueda leer registros en el .bkp los escribo en el .dat
+	while (fread(&reg, sizeof(choferes), 1, pbkp)) {
+		fwrite(&reg, sizeof(choferes), 1, pChof);
+	}
+	while (fread(&reg2, sizeof(viajes), 1, pbkp2)) {
+		fwrite(&reg2, sizeof(viajes), 1, pViaj);
+	}
+
+	//Cierro los archivos y retorno verdadero para saber que salio bien.
+	fclose(pChof);
+	fclose(pbkp);
+	fclose(pViaj);
+	fclose(pbkp2);
+
+
 
 	return true;
 }

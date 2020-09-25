@@ -38,4 +38,11 @@ bool guardar_choferes(choferes regChof, const char* direccion);
 
 // ----------------------------------------
 
+//
+// FUNCIONES BACKUP
+//
 
+//Crea el backup de los archivos choferes.dat y viajes.dat
+bool backupFiles();
+//Restaura el backup sobre los archivos originales
+bool restaurarFiles();

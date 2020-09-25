@@ -243,7 +243,7 @@ void listarChoferes() {
 	FILE* p;
 	choferes regChof;																																   
 
-	p = fopen("../Debug/choferes.dat", "rb");
+	p = fopen(ARCHIVO_CHOFERES, "rb");
 	if (p == NULL)
 	{
 		cout << "Error al abrir el archivo/ o no existe" << endl;

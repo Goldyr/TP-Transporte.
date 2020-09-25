@@ -123,7 +123,7 @@ void mostrarViaje(viajes regViaj) {
 
 	cout << "Fecha del viaje (dia/mes/año)" << endl;
 	cout << regViaj.fechaviaje.dia<< endl;
-	cout << regViaj.fechaviaje.dia<< endl;
+	cout << regViaj.fechaviaje.mes<< endl;
 	cout << regViaj.fechaviaje.año<< endl;
 
 	cout << "Hora de salida " << endl;

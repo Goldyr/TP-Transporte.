@@ -99,3 +99,81 @@ void menuViajes() {
 
 	return;
 }
+
+void menuReportes() {
+	int opcion;
+	cout << "MENÚ REPORTES" << endl;
+	cout << "------------------" << endl;
+	cout << "1) REPORTE 1" << endl;
+	cout << "2) REPORTE 2" << endl;
+	cout << "3) REPORTE 3" << endl;
+	cout << "--------------------------------" << endl;
+	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
+	
+	cin >> opcion;
+	cin.ignore();
+	cls();
+
+	switch (opcion) {
+	case 1:
+
+		break;
+	case 2:
+
+		break;
+	case 3:
+
+		break;
+	case 0:
+		break;
+	default:
+		cout << "Opcion incorrecta. " << endl;
+		break;
+
+	}
+
+}
+
+void menuConfig() {
+	int opcion;
+	cout << "MENÚ CONFIGURACION" << endl;
+	cout << "------------------" << endl;
+	cout << "1) REALIZAR BACKUP" << endl;
+	cout << "2) RESTAURAR BACKUP" << endl;
+	cout << "3) CARGAR DATOS DE INICIO" << endl;
+	cout << "--------------------------------" << endl;
+	cout << "0) VOLVER AL MENÚ PRINCIPAL" << endl;
+
+	cin >> opcion;
+	cin.ignore();
+	cls();
+
+	switch (opcion) {
+	case 1:
+		if (backupFiles() == true) {
+			cout << "Se ha generado la copia de seguridad con exito" << endl;
+
+		}
+		else {
+			cout << "Error al generar la copia de seguridad " << endl;
+		}
+		break;
+	case 2:
+		if (restaurarFiles() == true) {
+			cout << "Se ha restaurado con exito" << endl;
+		}
+		else {
+			cout << "Error al restaurar" << endl;
+		}
+		break;
+	case 3:
+		break;
+	case 0:
+		break;
+	default:
+		cout << "Opcion incorrecta. " << endl;
+		break;
+
+	}
+
+}
