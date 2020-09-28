@@ -10,7 +10,7 @@ using namespace std;
 using namespace rlutil;
 
 
-const char* ARCHIVO_CHOFERES = "../Debug/choferes.dat";
+const char* ARCHIVO_CHOFERES = "../Debug/choferes.ini";
 
 #include "structs.h"
 #include "menus.h"

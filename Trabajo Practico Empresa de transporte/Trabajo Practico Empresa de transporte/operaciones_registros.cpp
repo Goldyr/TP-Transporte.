@@ -45,7 +45,7 @@ int searchreg_viajes(int c)
 	}
 	while (fread(&reg, sizeof(viajes), 1, pf) == 1)
 	{
-		if (c == reg.IDViaje && reg.estado == true)
+		if (c == reg.IDViaje && reg.estado)
 		{
 			fclose(pf);
 			return pos;
@@ -68,12 +68,12 @@ bool leer_viajes(viajes* reg, int pos)
 	}
 	fseek(pf, sizeof(viajes)*pos, 0);
 	leer_viaje = fread(reg, sizeof(viajes), 1, pf);
+	fclose(pf);
 	return leer_viaje;
 }
 
 int searchreg_ch(char *c, BUSCAR_REGISTRO buscar)
 {
-
 	choferes reg;
 	int pos = 0;
 	FILE* pf;
@@ -208,6 +208,18 @@ bool guardar_viajes(viajes regViaj, const char* direccion) {
 	return true;
 }
 
+int contar_registros()
+{
+	FILE* pf;
+	viajes viaj;
+	int c = 0;
+	pf = fopen("../Debug/viajes.dat", "rb");
+	if (pf == NULL) return -1;
+	while (fread(&viaj, sizeof viaj, 1, pf) == 1) c++;
+	fclose(pf);
+	return c;
+}
+
 bool backupFiles() { 
 	//Confirmacion de usuario
 	char opcion;
@@ -275,11 +287,11 @@ bool backupFiles() {
 
 	// Mientras pueda leer registros en el .dat los escribo en el .bkp
 	while (fread(&reg, sizeof(choferes), 1, pChof)){
-		fwrite(&reg, sizeof(choferes), 1, pbkp);
+		if(reg.estado) fwrite(&reg, sizeof(choferes), 1, pbkp);
 	}
 
 	while (fread(&reg2, sizeof(viajes), 1, pViaj)) {
-		fwrite(&reg2, sizeof(viajes), 1, pbkp2);
+		if(reg2.estado)fwrite(&reg2, sizeof(viajes), 1, pbkp2);
 	}
 
 	//Cierro los archivos y retorno verdadero para saber que salio bien.
@@ -375,4 +387,91 @@ bool restaurarFiles() {
 
 
 	return true;
+}
+
+bool cargarDInicio()
+{
+	//Confirmacion de usuario
+	char opcion;
+	cout << "Desea cargar los datos de inicio? S/N" << endl;
+
+	cin >> opcion;
+	switch (opcion) {
+	case'n':
+		return false;
+		break;
+	case'N':
+		return false;
+		break;
+	case 's':
+		break;
+	case'S':
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	choferes reg;
+	viajes reg2;
+
+	FILE* pChof;
+	FILE* pini;
+	FILE* pViaj;
+	FILE* pini2;
+
+	//Abro los 2 archivos .bkp en rb .dat en wb
+	pini = fopen("../Debug/choferes.ini", "rb");
+	pChof = fopen("../Debug/choferes.dat", "wb");
+	pini2 = fopen("../Debug/viajes.ini", "rb");
+	pViaj = fopen("../Debug/viajes.dat", "wb");
+
+	// Me aseguro de que se hayan abierto ambos correctamente
+	if (pChof == NULL) {
+		fclose(pini);
+		fclose(pini2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.dat" << endl;
+		return false;
+	}
+	if (pini == NULL) {
+		fclose(pChof);
+		fclose(pini2);
+		fclose(pViaj);
+		cout << "Error abriendo choferes.ini" << endl;
+		return false;
+	}
+	if (pViaj == NULL) {
+		fclose(pChof);
+		fclose(pini2);
+		fclose(pini);
+		cout << "Error abriendo viajes.dat" << endl;
+		return false;
+	}
+	if (pini2 == NULL) {
+		fclose(pChof);
+		fclose(pini);
+		fclose(pViaj);
+		cout << "Error abriendo viajes.ini" << endl;
+		return false;
+	}
+
+	// Mientras pueda leer registros en el .bkp los escribo en el .dat
+	while (fread(&reg, sizeof(choferes), 1, pini)) {
+		fwrite(&reg, sizeof(choferes), 1, pChof);
+	}
+	while (fread(&reg2, sizeof(viajes), 1, pini2)) {
+		fwrite(&reg2, sizeof(viajes), 1, pViaj);
+	}
+
+	//Cierro los archivos y retorno verdadero para saber que salio bien.
+	fclose(pChof);
+	fclose(pini);
+	fclose(pViaj);
+	fclose(pini2);
+
+
+
+	return true;
+
 }

@@ -1,3 +1,3 @@
 ﻿  viajes.cpp
-C:\Users\Enzo\source\repos\TP-Transporte.-master\Trabajo Practico Empresa de transporte\Trabajo Practico Empresa de transporte\rlutil.h(588,101): warning C4267: 'argumento': conversión de 'size_t' a 'DWORD'; posible pérdida de datos
-  Trabajo Practico Empresa de transporte.vcxproj -> C:\Users\Enzo\source\repos\TP-Transporte.-master\Trabajo Practico Empresa de transporte\x64\Debug\Trabajo Practico Empresa de transporte.exe
+C:\Users\ser-a\Downloads\TP-Transporte.-master\Trabajo Practico Empresa de transporte\Trabajo Practico Empresa de transporte\rlutil.h(588,101): warning C4267: 'argumento': conversión de 'size_t' a 'DWORD'; posible pérdida de datos
+  Trabajo Practico Empresa de transporte.vcxproj -> C:\Users\ser-a\Downloads\TP-Transporte.-master\Trabajo Practico Empresa de transporte\x64\Debug\Trabajo Practico Empresa de transporte.exe

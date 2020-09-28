@@ -10,7 +10,7 @@ using namespace std;
 using namespace rlutil;
 
 
-const char* ARCHIVO_VIAJES = "../Debug/viajes.dat";
+const char* ARCHIVO_VIAJES = "../Debug/viajes.ini";
 
 #include "structs.h"
 #include "menus.h"
@@ -26,16 +26,18 @@ bool agregarViaje() {
 
 	//Ingresar datos
 	//TODO: FALTA HACER QUE EL ID VIAJE SEA AUTONUMERICO
-	cout << "Ingresar ID del viaje " << endl;
-	cin >> regViaj.IDViaje;
+
 
 	do
 	{
-		cout << "Ingresar el DNI del chofer" << endl;
+		cout << "Ingresar el DNI del chofer, 0 para volver" << endl;
 		cin >> regViaj.DNI_Chofer;
+		if (regViaj.DNI_Chofer[0] == '0') return false;
 	}
 	// Verificacion
 	while (searchreg_ch(regViaj.DNI_Chofer, DNI) == -1);
+
+	
 
 	cout << "Ingresar el ID del cliente" << endl;
 	cin >> regViaj.IDCliente;
@@ -84,9 +86,14 @@ bool agregarViaje() {
 
 	regViaj.estado = true;
 
+	
+
+	//Esto es para la autonumeracion del ID de viaje, basicamente cuenta los registros y le asigna ese valor a el ID
+	regViaj.IDViaje = contar_registros();
+	if (regViaj.IDViaje == -1) regViaj.IDViaje += 1;
+
 	//Guarda registro
 	guardar_viajes(regViaj, ARCHIVO_VIAJES);
-		
 
 	return true;
 }
@@ -112,36 +119,34 @@ void listarViajes() {
 
 }
 void mostrarViaje(viajes regViaj) {
-	cout << "ID del viaje " << endl;
-	cout << regViaj.IDViaje<< endl;
+	cout << "ID del viaje: ";
+	cout << regViaj.IDViaje << endl << endl;
 
-	cout << "DNI del chofer" << endl;
-	cout << regViaj.DNI_Chofer<< endl;
+	cout << "DNI del chofer: ";
+	cout << regViaj.DNI_Chofer << endl << endl;
 
-	cout << "ID del cliente" << endl;
-	cout << regViaj.IDCliente<< endl;
+	cout << "ID del cliente: ";
+	cout << regViaj.IDCliente << endl << endl;
 
-	cout << "Fecha del viaje (dia/mes/año)" << endl;
-	cout << regViaj.fechaviaje.dia<< endl;
-	cout << regViaj.fechaviaje.mes<< endl;
-	cout << regViaj.fechaviaje.año<< endl;
+	cout << "Fecha del viaje (dia/mes/año): ";
+	cout << regViaj.fechaviaje.dia << "/";
+	cout << regViaj.fechaviaje.mes << "/";
+	cout << regViaj.fechaviaje.año << endl << endl;
 
-	cout << "Hora de salida " << endl;
-	cout << regViaj.horasalida<< endl;
+	cout << "Hora de salida: ";
+	cout << regViaj.horasalida << endl << endl;
 
-	cout << "Kilometraje " << endl;
-	cout << regViaj.kilometraje<< endl;
+	cout << "Kilometraje: ";
+	cout << regViaj.kilometraje << endl << endl;
 
-	cout << "Importe " << endl;
-	cout << regViaj.importe<< endl;
+	cout << "Importe: ";
+	cout << regViaj.importe << endl << endl;
 
-	cout << "Patente" << endl;
-	cout << regViaj.patente<< endl;
+	cout << "Patente: ";
+	cout << regViaj.patente << endl << endl;
 
-	cout << "Calificacion" << endl;
-	cout << regViaj.calificacion<< endl;
-
-
+	cout << "Calificacion: ";
+	cout << regViaj.calificacion << endl << endl;
 }
 
 void eliminarViaje()
@@ -178,26 +183,8 @@ void eliminarViaje()
 	switch (opc)
 	{
 	case 's':
-		cls();
-		regViaje.estado = false;
-
-		if (modificar_viaje(regViaje, pos) == false)
-		{
-			cout << "Error al modificar el registro" << endl;
-			return;
-		}
-		cout << "El registro se dio de baja correctamente" << endl;
 		break;
-	case 'S':
-		cls();
-		regViaje.estado = false;
-
-		if (modificar_viaje(regViaje, pos) == false)
-		{
-			cout << "Error al modificar el registro" << endl;
-			return;
-		}
-		cout << "El registro se dio de baja correctamente" << endl;
+	case 'S':	
 		break;
 	case 'n':
 		return;
@@ -209,7 +196,15 @@ void eliminarViaje()
 		cout << "Opcion incorrecta" << endl;
 		return;
 	}
+	cls();
+	regViaje.estado = false;
 
+	if (modificar_viaje(regViaje, pos) == false)
+	{
+		cout << "Error al modificar el registro" << endl;
+		return;
+	}
+	cout << "El registro se dio de baja correctamente" << endl;
 
 }
 
@@ -223,6 +218,7 @@ void mostrarViaje_ID()
 	if (pos == -1)
 	{
 		cout << "No se encontro el ID, ingrese otro" << endl;
+		return;
 	}
 	if (leer_viajes(&viajeReg, pos) == false)
 	{

@@ -167,6 +167,8 @@ void menuConfig() {
 		}
 		break;
 	case 3:
+		if (cargarDInicio()) cout << "Datos de inicio cargados!" << endl;
+		else cout << "Error al cargar datos de inicio" << endl;
 		break;
 	case 0:
 		break;

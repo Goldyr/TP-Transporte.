@@ -16,6 +16,8 @@ bool guardar_viajes(viajes regViaj, const char* direccion);
 // Se modifica el registro sabiendo la posicion dentro del archivo
 bool modificar_viaje(viajes reg, int pos);
 
+//Se cuentan los registros del archivo de viajes
+int contar_registros();
 // -----------------------------------------
 
 //
@@ -46,3 +48,5 @@ bool guardar_choferes(choferes regChof, const char* direccion);
 bool backupFiles();
 //Restaura el backup sobre los archivos originales
 bool restaurarFiles();
+//Se cargan los datos de .ini a los archivos originales
+bool cargarDInicio();
