@@ -10,7 +10,7 @@ using namespace std;
 using namespace rlutil;
 
 
-const char* ARCHIVO_VIAJES = "../Debug/viajes.ini";
+const char* ARCHIVO_VIAJES = "../Debug/viajes.dat";
 
 #include "structs.h"
 #include "menus.h"
@@ -44,13 +44,13 @@ bool agregarViaje() {
 
 	do
 	{
-		cout << "Ingresar fecha del viaje (dia/mes/año)" << endl;
+		cout << "Ingresar fecha del viaje (dia/mes/aÃ±o)" << endl;
 		cin >> regViaj.fechaviaje.dia;
 		cin >> regViaj.fechaviaje.mes;
-		cin >> regViaj.fechaviaje.año;
+		cin >> regViaj.fechaviaje.aÃ±o;
 	}
 	// Verificacion
-	while (fechacmp(regViaj.fechaviaje.dia, regViaj.fechaviaje.mes, regViaj.fechaviaje.año, MENOR) == -1);
+	while (fechacmp(regViaj.fechaviaje.dia, regViaj.fechaviaje.mes, regViaj.fechaviaje.aÃ±o, MENOR) == -1);
 
 	do
 	{
@@ -128,10 +128,10 @@ void mostrarViaje(viajes regViaj) {
 	cout << "ID del cliente: ";
 	cout << regViaj.IDCliente << endl << endl;
 
-	cout << "Fecha del viaje (dia/mes/año): ";
+	cout << "Fecha del viaje (dia/mes/aÃ±o): ";
 	cout << regViaj.fechaviaje.dia << "/";
 	cout << regViaj.fechaviaje.mes << "/";
-	cout << regViaj.fechaviaje.año << endl << endl;
+	cout << regViaj.fechaviaje.aÃ±o << endl << endl;
 
 	cout << "Hora de salida: ";
 	cout << regViaj.horasalida << endl << endl;
