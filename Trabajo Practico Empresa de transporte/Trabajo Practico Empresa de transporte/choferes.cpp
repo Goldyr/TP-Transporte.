@@ -10,7 +10,7 @@ using namespace std;
 using namespace rlutil;
 
 
-const char* ARCHIVO_CHOFERES = "../Debug/choferes.ini";
+const char* ARCHIVO_CHOFERES = "../Debug/choferes.dat";
 
 #include "structs.h"
 #include "menus.h"
@@ -65,11 +65,11 @@ bool agregarChofer() {
 	do
 	{
 
-		cout << "Ingresar fecha de ingreso(dia/mes/año):" << endl;
+		cout << "Ingresar fecha de ingreso(dia/mes/aÃ±o):" << endl;
 		cin >> regChof.fechaingreso.dia;
 		cin >> regChof.fechaingreso.mes;
-		cin >> regChof.fechaingreso.año;
-	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.año, FECHAS::MENOR) == -1);
+		cin >> regChof.fechaingreso.aÃ±o;
+	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.aÃ±o, FECHAS::MENOR) == -1);
 
 	cin.ignore();
 	// 5. Ingreso de CUIT
@@ -94,11 +94,11 @@ bool agregarChofer() {
 	do
 	{
 
-		cout << "Ingresar fecha de vencimiento(dia/mes/año):" << endl;
+		cout << "Ingresar fecha de vencimiento(dia/mes/aÃ±o):" << endl;
 		cin >> regChof.vencimiento.dia;
 		cin >> regChof.vencimiento.mes;
-		cin >> regChof.vencimiento.año;
-	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.año, FECHAS::VENCIMIENTO) == -1);
+		cin >> regChof.vencimiento.aÃ±o;
+	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.aÃ±o, FECHAS::VENCIMIENTO) == -1);
 
 	
 
@@ -188,8 +188,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "año: ";
-		cin >> reg.vencimiento.año;
+		cout << "aÃ±o: ";
+		cin >> reg.vencimiento.aÃ±o;
 		// Se modifica
 		if (modificar_choferes(reg, pos) == true)
 		{
@@ -212,8 +212,8 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "año: ";
-		cin >> reg.vencimiento.año;
+		cout << "aÃ±o: ";
+		cin >> reg.vencimiento.aÃ±o;
 		// Se modifica
 		if (modificar_choferes(reg, pos) == true)
 		{
@@ -272,13 +272,13 @@ void mostrarChofer(choferes regChof) {
 	cout << endl;
 	cout << "APELLIDO: " << regChof.apellido << endl;
 	cout << endl;
-	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.año << endl;
+	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.aÃ±o << endl;
 	cout << endl;
 	cout << "CUIT: " << regChof.CUIT << endl;
 	cout << endl;
 	cout << "N DE REGISTRO: " << regChof.registro << endl;
 	cout << endl;
-	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.año << endl;
+	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.aÃ±o << endl;
 	cout << endl;
 	cout << "TELEFONO: " << regChof.telefono << endl;
 	cout << endl;
@@ -289,7 +289,7 @@ void mostrarChofer(choferes regChof) {
 
 bool isEmpty(char* p, int tam)
 {
-	// C cuenta cuantos vacíos hay
+	// C cuenta cuantos vacÃ­os hay
 	int c = 0;
 	for (int i = 0; i < tam; i++)
 	{
@@ -398,13 +398,13 @@ void cargarChar(char* p, int tam)
 	fflush(stdin);
 }
 
-int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
+int fechacmp(int c_dia, int c_mes, int c_aÃ±o, FECHAS opcion)
 {
 	// Declaracion de variables de ctime
-	int mes, dia, año;
+	int mes, dia, aÃ±o;
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
-	año = 1900 + ltm->tm_year;
+	aÃ±o = 1900 + ltm->tm_year;
 	mes = 1 + ltm->tm_mon;
 	dia = ltm->tm_mday;
 	// Swtich de enum de opcion
@@ -412,17 +412,17 @@ int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
 	{
 	// La fecha a comparar tiene que ser menor a la del sistema
 	case MENOR:
-		// Pregunto si el año para comparar es mayor
-		if (c_año > año)
+		// Pregunto si el aÃ±o para comparar es mayor
+		if (c_aÃ±o > aÃ±o)
 		{
 			return -1;
 		}
-		// Si es el mismo año pregunto si el mes es mayor
-		if (c_año == año)
+		// Si es el mismo aÃ±o pregunto si el mes es mayor
+		if (c_aÃ±o == aÃ±o)
 		{
 			if (c_mes > mes) return -1;
 		}
-		// Si es el mismo año y mes pregunto si el dia es mayor
+		// Si es el mismo aÃ±o y mes pregunto si el dia es mayor
 		if (c_mes == mes)
 		{
 			if (c_dia > dia) return -1;
@@ -484,17 +484,17 @@ int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
 		break;
 	// La fecha a comparar tiene que ser mayor a la del sistema
 	case VENCIMIENTO:
-		// Pregunto si el año a comparar es menor
-		if (c_año < año)
+		// Pregunto si el aÃ±o a comparar es menor
+		if (c_aÃ±o < aÃ±o)
 		{
 			return -1;
 		}
 		// El mes es menor?
-		if (c_año == año)
+		if (c_aÃ±o == aÃ±o)
 		{
 			if (c_mes < mes) return -1;
 		}
-		// Mismo año, mismo mes el dia es menor? 
+		// Mismo aÃ±o, mismo mes el dia es menor? 
 		if (c_mes == mes)
 		{
 			if (c_dia < dia) return -1;
