@@ -36,10 +36,6 @@ int searchreg_ch(char *c, BUSCAR_REGISTRO buscar);
 //Guarda registro de choferes
 bool guardar_choferes(choferes regChof, const char* direccion);
 
-//Guarda un registro depende el registro y direccion de archivo que mandes
-
-// ----------------------------------------
-
 //
 // FUNCIONES BACKUP
 //

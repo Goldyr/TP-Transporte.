@@ -25,8 +25,6 @@ bool agregarViaje() {
 	viajes regViaj;
 
 	//Ingresar datos
-	//TODO: FALTA HACER QUE EL ID VIAJE SEA AUTONUMERICO
-
 
 	do
 	{
@@ -47,10 +45,10 @@ bool agregarViaje() {
 		cout << "Ingresar fecha del viaje (dia/mes/año)" << endl;
 		cin >> regViaj.fechaviaje.dia;
 		cin >> regViaj.fechaviaje.mes;
-		cin >> regViaj.fechaviaje.año;
+		cin >> regViaj.fechaviaje.anio;
 	}
 	// Verificacion
-	while (fechacmp(regViaj.fechaviaje.dia, regViaj.fechaviaje.mes, regViaj.fechaviaje.año, MENOR) == -1);
+	while (fechacmp(regViaj.fechaviaje.dia, regViaj.fechaviaje.mes, regViaj.fechaviaje.anio, MENOR) == -1);
 
 	do
 	{
@@ -108,45 +106,44 @@ void listarViajes() {
 		system("pause");
 		return;
 	}
+	int pos = 1;
+
+	titulosListadoViajes();
 	while (fread(&regViaj, sizeof(viajes), 1, p)) {
 		if (regViaj.estado == true) {
-			mostrarViaje(regViaj);
-			cout << "-----------FIN VIAJE----------" << endl;
+			mostrarViaje(regViaj,pos);
+			pos++;
 		}
 	}
 	fclose(p);
 	return;
 
 }
-void mostrarViaje(viajes regViaj) {
-	cout << "ID del viaje: ";
-	cout << regViaj.IDViaje << endl << endl;
+void mostrarViaje(viajes regViaj, int pos) {
+	pos ++;
+	gotoxy(1,pos);cout << regViaj.IDViaje;
+	gotoxy(10,pos);cout <<  regViaj.DNI_Chofer;
+	gotoxy(25,pos);cout << regViaj.IDCliente;
+	gotoxy(40,pos);cout << regViaj.fechaviaje.dia << "/" << regViaj.fechaviaje.mes << "/" << regViaj.fechaviaje.anio;
+	gotoxy(55,pos);cout << regViaj.horasalida;
+	gotoxy(70,pos);cout << regViaj.kilometraje;
+	gotoxy(80,pos);cout << regViaj.importe;
+	gotoxy(90,pos);cout << regViaj.patente;
+	gotoxy(100,pos);cout << regViaj.calificacion;
+	cout << endl;
+}
 
-	cout << "DNI del chofer: ";
-	cout << regViaj.DNI_Chofer << endl << endl;
-
-	cout << "ID del cliente: ";
-	cout << regViaj.IDCliente << endl << endl;
-
-	cout << "Fecha del viaje (dia/mes/año): ";
-	cout << regViaj.fechaviaje.dia << "/";
-	cout << regViaj.fechaviaje.mes << "/";
-	cout << regViaj.fechaviaje.año << endl << endl;
-
-	cout << "Hora de salida: ";
-	cout << regViaj.horasalida << endl << endl;
-
-	cout << "Kilometraje: ";
-	cout << regViaj.kilometraje << endl << endl;
-
-	cout << "Importe: ";
-	cout << regViaj.importe << endl << endl;
-
-	cout << "Patente: ";
-	cout << regViaj.patente << endl << endl;
-
-	cout << "Calificacion: ";
-	cout << regViaj.calificacion << endl << endl;
+void titulosListadoViajes() {
+	system("cls");
+	gotoxy(1, 1); cout << "ID VIAJE";
+	gotoxy(10, 1); cout << "DNI";
+	gotoxy(25, 1); cout << "ID CLIENTE";
+	gotoxy(40, 1); cout << "FECHA VIAJ";
+	gotoxy(55, 1); cout << "HORA SALIDA";
+	gotoxy(70, 1); cout << "KM";
+	gotoxy(80, 1); cout << "IMPORTE";
+	gotoxy(90, 1); cout << "PATENTE";
+	gotoxy(100, 1); cout << "CALIFICACION";
 }
 
 void eliminarViaje()
@@ -172,7 +169,7 @@ void eliminarViaje()
 
 	cout << "Se encontro el siguiente registro: " << endl;
 
-	mostrarViaje(regViaje);
+	mostrarViaje(regViaje,5);
 
 	cout << endl;
 
@@ -225,5 +222,7 @@ void mostrarViaje_ID()
 		cout << "Error al leer el registro de viajes" << endl;
 	}
 	cls();
-	mostrarViaje(viajeReg);
+	titulosListadoViajes();
+	mostrarViaje(viajeReg,2);
 }
+

@@ -68,8 +68,8 @@ bool agregarChofer() {
 		cout << "Ingresar fecha de ingreso(dia/mes/año):" << endl;
 		cin >> regChof.fechaingreso.dia;
 		cin >> regChof.fechaingreso.mes;
-		cin >> regChof.fechaingreso.año;
-	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.año, FECHAS::MENOR) == -1);
+		cin >> regChof.fechaingreso.anio;
+	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.anio, FECHAS::MENOR) == -1);
 
 	cin.ignore();
 	// 5. Ingreso de CUIT
@@ -94,11 +94,11 @@ bool agregarChofer() {
 	do
 	{
 
-		cout << "Ingresar fecha de vencimiento(dia/mes/año):" << endl;
+		cout << "Ingresar fecha de vencimiento(dia/mes/anio):" << endl;
 		cin >> regChof.vencimiento.dia;
 		cin >> regChof.vencimiento.mes;
-		cin >> regChof.vencimiento.año;
-	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.año, FECHAS::VENCIMIENTO) == -1);
+		cin >> regChof.vencimiento.anio;
+	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.anio, FECHAS::VENCIMIENTO) == -1);
 
 	
 
@@ -139,7 +139,7 @@ void mostrarChoferDNI()
 		return;
 	}
 	cls();
-	mostrarChofer(reg);
+	mostrarChofer(reg,0);
 	
 }
 
@@ -171,7 +171,7 @@ void modificarChofer() {
 	// Existe y se pudo leer el registro
 	cout << "Se encontro el siguiente registro: " << endl;
 	// Se da a conocer el registro en pantalla
-	mostrarChofer(reg);
+	mostrarChofer(reg,5);
 	cout << endl << endl;
 	// Se pregunta si se desea modificar
 	cout << "Deseas modificarlo? (s/n)  ";
@@ -188,14 +188,15 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "año: ";
-		cin >> reg.vencimiento.año;
+		cout << "anio: ";
+		cin >> reg.vencimiento.anio;
 		// Se modifica
 		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se sobreescribio correctamente
 			cout << "El registro se modifico correctamente" << endl;
-			mostrarChofer(reg);
+			titulosListadoChofer();
+			mostrarChofer(reg,0);
 		}
 		else
 		{
@@ -212,14 +213,15 @@ void modificarChofer() {
 		cin >> reg.vencimiento.dia;
 		cout << "Mes: ";
 		cin >> reg.vencimiento.mes;
-		cout << "año: ";
-		cin >> reg.vencimiento.año;
+		cout << "anio: ";
+		cin >> reg.vencimiento.anio;
 		// Se modifica
 		if (modificar_choferes(reg, pos) == true)
 		{
 			// Verifico si se sobreescribio correctamente
 			cout << "El registro se modifico correctamente" << endl;
-			mostrarChofer(reg);
+			titulosListadoChofer();
+			mostrarChofer(reg,0);
 		}
 		else
 		{
@@ -251,10 +253,14 @@ void listarChoferes() {
 		system("pause");
 		return;
 	}
+	int pos = 1;
+
+	 titulosListadoChofer();
 	while (fread(&regChof, sizeof(choferes), 1, p)) {
+		
 		if (regChof.estado == true) {
-			mostrarChofer(regChof);
-			cout << "-----------FIN USUARIO-----------" << endl;
+			mostrarChofer(regChof,pos);
+			pos++;
 		}
 	}
 
@@ -264,28 +270,33 @@ void listarChoferes() {
 	return;
 }
 
-void mostrarChofer(choferes regChof) {
-	
-	cout << "DNI: " << regChof.DNI << endl;
+void mostrarChofer(choferes regChof,int pos) {
+	pos ++;
+	gotoxy(1, pos); cout <<  regChof.DNI;
+	gotoxy(10, pos); cout  << regChof.nombre;
+	gotoxy(30, pos); cout <<  regChof.apellido;
+	gotoxy(50, pos); cout <<  regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.anio;
+	gotoxy(70, pos); cout  << regChof.CUIT;
+	gotoxy(85, pos); cout  << regChof.registro;
+	gotoxy(95, pos); cout  << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.anio;
+	gotoxy(106, pos); cout  << regChof.telefono;
 	cout << endl;
-	cout << "NOMBRE: " << regChof.nombre << endl;
-	cout << endl;
-	cout << "APELLIDO: " << regChof.apellido << endl;
-	cout << endl;
-	cout << "FECHA DE INGRESO: " << regChof.fechaingreso.dia << "/" << regChof.fechaingreso.mes << "/" << regChof.fechaingreso.año << endl;
-	cout << endl;
-	cout << "CUIT: " << regChof.CUIT << endl;
-	cout << endl;
-	cout << "N DE REGISTRO: " << regChof.registro << endl;
-	cout << endl;
-	cout << "FECHA DE VENCIMIENTO: " << regChof.vencimiento.dia << "/" << regChof.vencimiento.mes << "/" << regChof.vencimiento.año << endl;
-	cout << endl;
-	cout << "TELEFONO: " << regChof.telefono << endl;
-	cout << endl;
-
 
 	return;
 }
+
+void titulosListadoChofer() {
+	system("cls");
+	gotoxy(1, 1); cout << "DNI";
+	gotoxy(10, 1); cout << "NOMBRE";
+	gotoxy(30, 1); cout << "APELLIDO";
+	gotoxy(50, 1); cout << "FECHA/ING";
+	gotoxy(70, 1); cout << "CUIT";
+	gotoxy(85, 1); cout << "REGISTRO";
+	gotoxy(95, 1); cout << "FECHA/VENC";
+	gotoxy(106, 1); cout << "TELEFONO";
+}
+
 
 bool isEmpty(char* p, int tam)
 {
@@ -331,10 +342,10 @@ void eliminarChofer() {
 	// Existe y se pudo leer el registro
 	cout << "Se encontro el siguiente registro: " << endl;
 	// Muestro el registro a dar de baja
-	mostrarChofer(reg);
+	mostrarChofer(reg,5);
 	cout << endl;
 	//Estas seguro de que queres darlo de baja? 
-	cout << "Deseas darlo de baja? (S/n)  ";
+	cout << "Deseas darlo de baja? (S/n)  "<< endl;
 	cin >> opc;
 	switch (opc)
 	{
@@ -398,13 +409,13 @@ void cargarChar(char* p, int tam)
 	fflush(stdin);
 }
 
-int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
+int fechacmp(int c_dia, int c_mes, int c_anio, FECHAS opcion)
 {
 	// Declaracion de variables de ctime
-	int mes, dia, año;
+	int mes, dia, anio;
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
-	año = 1900 + ltm->tm_year;
+	anio = 1900 + ltm->tm_year;
 	mes = 1 + ltm->tm_mon;
 	dia = ltm->tm_mday;
 	// Swtich de enum de opcion
@@ -413,16 +424,16 @@ int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
 	// La fecha a comparar tiene que ser menor a la del sistema
 	case MENOR:
 		// Pregunto si el año para comparar es mayor
-		if (c_año > año)
+		if (c_anio > anio)
 		{
 			return -1;
 		}
 		// Si es el mismo año pregunto si el mes es mayor
-		if (c_año == año)
+		if (c_anio == anio)
 		{
 			if (c_mes > mes) return -1;
 		}
-		// Si es el mismo año y mes pregunto si el dia es mayor
+		// Si es el mismo anio y mes pregunto si el dia es mayor
 		if (c_mes == mes)
 		{
 			if (c_dia > dia) return -1;
@@ -485,12 +496,12 @@ int fechacmp(int c_dia, int c_mes, int c_año, FECHAS opcion)
 	// La fecha a comparar tiene que ser mayor a la del sistema
 	case VENCIMIENTO:
 		// Pregunto si el año a comparar es menor
-		if (c_año < año)
+		if (c_anio < anio)
 		{
 			return -1;
 		}
 		// El mes es menor?
-		if (c_año == año)
+		if (c_anio == anio)
 		{
 			if (c_mes < mes) return -1;
 		}

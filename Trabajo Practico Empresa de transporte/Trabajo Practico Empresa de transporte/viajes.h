@@ -8,10 +8,12 @@ bool agregarViaje();
 void listarViajes();
 
 //Muestra un viaje
-void mostrarViaje(viajes regViaj);
+void mostrarViaje(viajes regViaj,int pos);
 
 //Muestra un viaje por ID
 void mostrarViaje_ID();
 
 //Se elimina un viaje ingresado
 void eliminarViaje();
+
+void titulosListadoViajes();
