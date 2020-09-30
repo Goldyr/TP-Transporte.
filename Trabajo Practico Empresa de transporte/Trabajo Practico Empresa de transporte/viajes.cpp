@@ -17,10 +17,50 @@ const char* ARCHIVO_VIAJES = "../Debug/viajes.dat";
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
-
+#include "grafica.h"
 
 
 bool agregarViaje() {
+
+	bordes(0, TRUE);
+	int col = columnas();
+	int row = filas();
+
+	int newc = col / 3; // X
+	int newr = row / 5;	// Y
+
+	newc = col - (col - 2);
+
+	setColor(CYAN);
+	locate(newc + 1, newr + 1);
+	cout << "DNI CHOFER";
+	locate(newc + 15, newr + 1);
+	cout << "ID CLIENTE";
+	locate(newc + 27, newr + 1);
+	cout << "FECHA VIAJE";
+	locate(newc + 40, newr + 1);
+	cout << "HORA SALIDA";
+	locate(newc + 54, newr + 1);
+	cout << "KM";
+	locate(newc + 60, newr + 1);
+	cout << "IMPORTE";
+	locate(newc + 70, newr + 1);
+	cout << "PATENTE";
+	locate(newc + 85, newr + 1);
+	cout << "CALIFICACION";
+	setColor(WHITE);
+	// FIN DE DECLARACIONES PARA LA PARTE GRAFICA
+	setlocale(LC_ALL, "C");
+	int k = 0;
+	for (int i = 0; i < col - 5; i++)
+	{
+		k++;
+		locate(newc + k, newr + 2);
+		cout << (char)205;
+	}
+
+
+	setlocale(LC_ALL, "Spanish");
 
 	viajes regViaj;
 
@@ -28,23 +68,29 @@ bool agregarViaje() {
 
 	do
 	{
-		cout << "Ingresar el DNI del chofer, 0 para volver" << endl;
+		locate(newc + 1, newr + 3);
 		cin >> regViaj.DNI_Chofer;
-		if (regViaj.DNI_Chofer[0] == '0') return false;
 	}
 	// Verificacion
 	while (searchreg_ch(regViaj.DNI_Chofer, DNI) == -1);
 
 	
-
-	cout << "Ingresar el ID del cliente" << endl;
+	locate(newc + 15, newr + 3);
 	cin >> regViaj.IDCliente;
 
 	do
 	{
-		cout << "Ingresar fecha del viaje (dia/mes/año)" << endl;
+		locate(newc + 27, newr + 3);
+		cout << "            ";
+		locate(newc + 27, newr + 3);
 		cin >> regViaj.fechaviaje.dia;
+		locate(newc + 29, newr + 3);
+		cout << "/";
+		locate(newc + 30, newr + 3);
 		cin >> regViaj.fechaviaje.mes;
+		locate(newc + 32, newr + 3);
+		cout << "/";
+		locate(newc + 33, newr + 3);
 		cin >> regViaj.fechaviaje.anio;
 	}
 	// Verificacion
@@ -52,19 +98,21 @@ bool agregarViaje() {
 
 	do
 	{
-		cout << "Ingresar hora de salida " << endl;
+		locate(newc + 40, newr + 3);
+		cout << "       ";
+		locate(newc + 40, newr + 3);
 		cin >> regViaj.horasalida;
 	} while (regViaj.horasalida < 0 || regViaj.horasalida >23);
 
 	do
 	{
-		cout << "Ingresar Kilometraje " << endl;
+		locate(newc + 54, newr + 3);
 		cin >> regViaj.kilometraje;
 	} while (regViaj.kilometraje <= 0);
 
 	do
 	{
-		cout << "Ingresar Importe " << endl;
+		locate(newc + 60, newr + 3);
 		cin >> regViaj.importe;
 	} while (regViaj.importe <= 0);
 
@@ -72,13 +120,13 @@ bool agregarViaje() {
 
 	do
 	{
-		cout << "Ingresar patente" << endl;
+		locate(newc + 70, newr + 3);
 		cargarChar(regViaj.patente, 10);
 	} while (isEmpty(regViaj.patente, 10) == true);
 
 	do
 	{
-		cout << "Ingresar calificacion" << endl;
+		locate(newc + 85, newr + 3);
 		cin >> regViaj.calificacion;
 	} while (regViaj.calificacion < 0 || regViaj.calificacion>5);
 

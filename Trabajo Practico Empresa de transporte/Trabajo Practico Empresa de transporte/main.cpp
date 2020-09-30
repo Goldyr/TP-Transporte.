@@ -14,20 +14,36 @@ using namespace rlutil;
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
+#include "grafica.h"
 
 int main() {
+
 	int opcion;
-	setlocale(LC_CTYPE, "Spanish");
-	while (true) {
+
+	int col = columnas()/3 + 3;
+	int row = filas()/5;
+
+	setConsoleTitle("Empresa de viajes");
+
+		while (true) {
 		cls();
+		bordes(7, FALSE);
+		setlocale(LC_CTYPE, "Spanish");
+		locate(col, row+1);
 		cout << "MENÚ PRINCIPAL" << endl;
-		cout << "--------------" << endl;
-		cout << "1) CHOFERES" << endl;
-		cout << "2) VIAJES" << endl;
-		cout << "3) REPORTES" << endl;
-		cout << "4) CONFIGURACION" << endl;
-		cout << "----------------------" << endl;
-		cout << "0) SALIR DEL PROGRAMA" << endl;
+		locate(col, row + 3);
+		cout << "1. CHOFERES" << endl;
+		locate(col, row + 4);
+		cout << "2. VIAJES" << endl;
+		locate(col, row + 5);
+		cout << "3. REPORTES" << endl;
+		locate(col, row + 6);
+		cout << "4. CONFIGURACION" << endl;
+		locate(col, row + 7);
+		cout << "0. SALIR DEL PROGRAMA" << endl;
+		locate(col, row + 9);
+		cout << "INGRESAR OPCION:   ";
+		hidecursor();
 		cin >> opcion;
 		cin.ignore();
 		cls();
@@ -52,7 +68,6 @@ int main() {
 				system("pause");
 				break;
 		}
-		system("pause");
 	}
 	
 	return 0;

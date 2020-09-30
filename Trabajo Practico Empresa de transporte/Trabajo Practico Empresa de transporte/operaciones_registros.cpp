@@ -15,6 +15,7 @@ using namespace rlutil;
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
+#include "grafica.h"
 
 bool leer_choferes(choferes *reg, int pos)
 {

@@ -17,16 +17,57 @@ const char* ARCHIVO_CHOFERES = "../Debug/choferes.dat";
 #include "operaciones_registros.h"
 #include "choferes.h"
 #include "viajes.h"
+#include "grafica.h"
 
 
 
 bool agregarChofer() {
-	choferes regChof;
+
+	bordes(0, TRUE);
+	int col = columnas();
+	int row = filas();
+
+	int newc = col / 3; // X
+	int newr = row / 5;	// Y
+
+	newc = col - (col - 2);
+
+	setColor(CYAN);
+	locate(newc+1, newr+1);
+	cout << "DNI";
+	locate(newc + 11, newr + 1);
+	cout << "NOMBRE(S)";
+	locate(newc + 31, newr + 1);
+	cout << "APELLIDO(S)";
+	locate(newc + 51, newr + 1);
+	cout << "INGRESO";
+	locate(newc + 62, newr + 1);
+	cout << "CUIT";
+	locate(newc + 78, newr + 1);
+	cout << "TIPO";
+	locate(newc + 84, newr + 1);
+	cout << "VTO";
+	locate(newc + 95, newr + 1);
+	cout << "TELEFONO";
+	setColor(WHITE);
+	// FIN DE DECLARACIONES PARA LA PARTE GRAFICA
+	setlocale(LC_ALL, "C");
+	int k = 0;
+	for (int i = 0; i < col - 5; i++)
+	{
+		k++;
+		locate(newc + k, newr + 2);
+		cout << (char)205;
+	}
 	
+	
+	setlocale(LC_ALL, "Spanish");
+
+	choferes regChof;
 	// 1. Ingreso DNI
 	do
 	{	
-		cout << "Ingresar DNI: " << endl;
+		locate(newc+1, newr+3);
 		cargarChar(regChof.DNI, 10);
 
 	}
@@ -36,12 +77,12 @@ bool agregarChofer() {
 	// 1. No este vacio el array tipo char
 	// 2. El DNI es unico en el archivo
 	while (isEmpty(regChof.DNI, 10) == true || searchreg_ch(regChof.DNI, BUSCAR_REGISTRO::DNI) != -1);
-	
 
+	
 	// 2. Ingreso Nombre
 	do
 	{
-		cout << "Ingresar Nombre: " << endl;
+		locate(newc + 11, newr + 3);
 		cargarChar(regChof.nombre, 50);
 	}
 	//
@@ -52,7 +93,7 @@ bool agregarChofer() {
 	// 3. Ingreso Apellido
 	do
 	{
-		cout << "Ingresar Apellido: " << endl;
+		locate(newc + 31, newr + 3);
 		cargarChar(regChof.apellido, 50);
 
 	}
@@ -64,10 +105,17 @@ bool agregarChofer() {
 	// 4. Ingreso de fecha de ingreso
 	do
 	{
-
-		cout << "Ingresar fecha de ingreso(dia/mes/año):" << endl;
+		locate(newc + 51, newr + 3);
+		cout << "          ";
+		locate(newc + 51, newr + 3);
 		cin >> regChof.fechaingreso.dia;
+		locate(newc + 53, newr + 3);
+		cout << "/";
+		locate(newc + 54, newr + 3);
 		cin >> regChof.fechaingreso.mes;
+		locate(newc + 56, newr + 3);
+		cout << "/";
+		locate(newc + 57, newr + 3);
 		cin >> regChof.fechaingreso.anio;
 	}	while (fechacmp(regChof.fechaingreso.dia, regChof.fechaingreso.mes, regChof.fechaingreso.anio, FECHAS::MENOR) == -1);
 
@@ -76,7 +124,7 @@ bool agregarChofer() {
 
 	do
 	{
-		cout << "Ingresar CUIT: " << endl;
+		locate(newc + 62, newr + 3);
 		cargarChar(regChof.CUIT, 20);
 	}
 	//
@@ -86,24 +134,30 @@ bool agregarChofer() {
 
 
 	do {
-		cout << "Ingresar registro (1,2 o 3): " << endl;
+		locate(newc + 78, newr + 3);
 		cin >> regChof.registro;
 	} while (regChof.registro < 1 || regChof.registro>3);
 	
 
 	do
 	{
-
-		cout << "Ingresar fecha de vencimiento(dia/mes/anio):" << endl;
+		locate(newc + 84, newr + 3);
+		cout << "          ";
+		locate(newc + 84, newr + 3);
 		cin >> regChof.vencimiento.dia;
+		locate(newc + 86, newr + 3);
+		cout << "/";
+		locate(newc + 87, newr + 3);
 		cin >> regChof.vencimiento.mes;
+		locate(newc + 89, newr + 3);
+		cout << "/";
+		locate(newc + 90, newr + 3);
 		cin >> regChof.vencimiento.anio;
 	} while (fechacmp(regChof.vencimiento.dia, regChof.vencimiento.mes, regChof.vencimiento.anio, FECHAS::VENCIMIENTO) == -1);
 
 	
 
-
-	cout << "Ingresar numero de telefono: " << endl;
+	locate(newc + 95, newr + 3);
 	cin >> regChof.telefono;
 
 	regChof.propietario = true;
@@ -400,7 +454,7 @@ void cargarChar(char* p, int tam)
 {
 	int i;
 	fflush(stdin);
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < tam; i++)
 	{
 		p[i] = cin.get();
 		if (p[i] == '\n') break;
