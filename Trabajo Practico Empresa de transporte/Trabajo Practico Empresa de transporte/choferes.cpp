@@ -36,37 +36,42 @@ bool agregarChofer() {
 	locate(newc+1, newr+1);
 	cout << "DNI";
 	locate(newc + 11, newr + 1);
-	cout << "NOMBRE(S)";
-	locate(newc + 31, newr + 1);
 	cout << "APELLIDO(S)";
+	locate(newc + 31, newr + 1);
+	cout << "NOMBRE(S)";
 	locate(newc + 51, newr + 1);
 	cout << "INGRESO";
 	locate(newc + 62, newr + 1);
 	cout << "CUIT";
 	locate(newc + 78, newr + 1);
 	cout << "TIPO";
-	locate(newc + 84, newr + 1);
+	locate(newc + 87, newr + 1);
 	cout << "VTO";
 	locate(newc + 95, newr + 1);
 	cout << "TELEFONO";
+	locate(newc + 106, newr + 1);
+	cout << "PROPTRIO";
 	setColor(WHITE);
-	// FIN DE DECLARACIONES PARA LA PARTE GRAFICA
-	setlocale(LC_ALL, "C");
 	int k = 0;
+	setlocale(LC_ALL, "C");
+
 	for (int i = 0; i < col - 5; i++)
 	{
 		k++;
 		locate(newc + k, newr + 2);
 		cout << (char)205;
 	}
-	
+
+	// FIN DE DECLARACIONES PARA LA PARTE GRAFICA
 	
 	setlocale(LC_ALL, "Spanish");
-
+	int prop;
 	choferes regChof;
 	// 1. Ingreso DNI
 	do
 	{	
+		locate(newc + 1, newr + 3);
+		cout << "         ";
 		locate(newc+1, newr+3);
 		cargarChar(regChof.DNI, 10);
 
@@ -79,28 +84,32 @@ bool agregarChofer() {
 	while (isEmpty(regChof.DNI, 10) == true || searchreg_ch(regChof.DNI, BUSCAR_REGISTRO::DNI) != -1);
 
 	
-	// 2. Ingreso Nombre
+	// 2. Ingreso apellido
 	do
 	{
 		locate(newc + 11, newr + 3);
-		cargarChar(regChof.nombre, 50);
-	}
-	//
-	// Validacion
-	//
-	while (isEmpty(regChof.nombre, 50) == true);
-
-	// 3. Ingreso Apellido
-	do
-	{
-		locate(newc + 31, newr + 3);
+		cout << "                  ";
+		locate(newc + 11, newr + 3);
 		cargarChar(regChof.apellido, 50);
-
 	}
 	//
 	// Validacion
 	//
 	while (isEmpty(regChof.apellido, 50) == true);
+
+	// 3. Ingreso nombre
+	do
+	{
+		locate(newc + 31, newr + 3);
+		cout << "                  ";
+		locate(newc + 31, newr + 3);
+		cargarChar(regChof.nombre, 50);
+
+	}
+	//
+	// Validacion
+	//
+	while (isEmpty(regChof.nombre, 50) == true);
 
 	// 4. Ingreso de fecha de ingreso
 	do
@@ -125,6 +134,8 @@ bool agregarChofer() {
 	do
 	{
 		locate(newc + 62, newr + 3);
+		cout << "                   ";
+		locate(newc + 62, newr + 3);
 		cargarChar(regChof.CUIT, 20);
 	}
 	//
@@ -134,6 +145,8 @@ bool agregarChofer() {
 
 
 	do {
+		locate(newc + 78, newr + 3);
+		cout << "   ";
 		locate(newc + 78, newr + 3);
 		cin >> regChof.registro;
 	} while (regChof.registro < 1 || regChof.registro>3);
@@ -160,9 +173,25 @@ bool agregarChofer() {
 	locate(newc + 95, newr + 3);
 	cin >> regChof.telefono;
 
-	regChof.propietario = true;
-	regChof.estado = true;
+	do
+	{
+		locate(newc + 108, newr + 3);
+		cout << "  ";
+		locate(newc + 108, newr + 3);
+		cin >> prop;
+		switch (prop)
+		{
+		case 1:
+			regChof.propietario = true;
+			break;
+		case 0:
+			regChof.propietario = false;
+			break;
+		default: break;
+		}
+	} while (prop < 0 || prop > 1);
 	
+	regChof.estado = true;
 	guardar_choferes(regChof,ARCHIVO_CHOFERES);
 	
 	return true;

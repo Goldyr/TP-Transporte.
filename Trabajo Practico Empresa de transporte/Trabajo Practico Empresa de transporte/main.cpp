@@ -19,10 +19,9 @@ using namespace rlutil;
 int main() {
 
 	int opcion;
-
 	int col = columnas()/3 + 3;
 	int row = filas()/5;
-
+	
 	setConsoleTitle("Empresa de viajes");
 
 		while (true) {

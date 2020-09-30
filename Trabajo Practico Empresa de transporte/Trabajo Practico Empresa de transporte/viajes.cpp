@@ -42,7 +42,7 @@ bool agregarViaje() {
 	cout << "HORA SALIDA";
 	locate(newc + 54, newr + 1);
 	cout << "KM";
-	locate(newc + 60, newr + 1);
+	locate(newc + 62, newr + 1);
 	cout << "IMPORTE";
 	locate(newc + 70, newr + 1);
 	cout << "PATENTE";
@@ -68,6 +68,8 @@ bool agregarViaje() {
 
 	do
 	{
+		locate(newc + 1, newr + 3);
+		cout << "            ";
 		locate(newc + 1, newr + 3);
 		cin >> regViaj.DNI_Chofer;
 	}
@@ -107,12 +109,16 @@ bool agregarViaje() {
 	do
 	{
 		locate(newc + 54, newr + 3);
+		cout << "      ";
+		locate(newc + 54, newr + 3);
 		cin >> regViaj.kilometraje;
 	} while (regViaj.kilometraje <= 0);
 
 	do
 	{
-		locate(newc + 60, newr + 3);
+		locate(newc + 62, newr + 3);
+		cout << "          ";
+		locate(newc + 62, newr + 3);
 		cin >> regViaj.importe;
 	} while (regViaj.importe <= 0);
 
@@ -121,11 +127,15 @@ bool agregarViaje() {
 	do
 	{
 		locate(newc + 70, newr + 3);
+		cout << "          ";
+		locate(newc + 70, newr + 3);
 		cargarChar(regViaj.patente, 10);
 	} while (isEmpty(regViaj.patente, 10) == true);
 
 	do
 	{
+		locate(newc + 85, newr + 3);
+		cout << "   ";
 		locate(newc + 85, newr + 3);
 		cin >> regViaj.calificacion;
 	} while (regViaj.calificacion < 0 || regViaj.calificacion>5);

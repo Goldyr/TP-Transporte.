@@ -108,9 +108,14 @@ void menuViajes() {
 	switch (opcion) {
 	case 1:
 		if (agregarViaje()) {
+			locate(1, 12);
 		cout << "Se ha agregado correctamente." << endl;
 		}
-		else cout << "Error al crear/agregar registro." << endl; // Done
+		else
+		{
+			locate(1, 12);
+			cout << "Error al crear/agregar registro." << endl; // Done
+		}
 		break;
 	case 2:
 		mostrarViaje_ID(); // Done
